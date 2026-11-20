@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Search } from "lucide-react";
+import { BadgeCheck, RotateCcw, Search, ShieldCheck, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -15,17 +15,27 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
-import { PageHeader } from "@/components/page-header";
 import { useProducts } from "@/lib/products";
 import { formatCents } from "@/lib/format";
 import { cartCount, useCartStore } from "@/stores/cart-store";
 import { usePlaceOrder, type PlaceOrderError } from "@/lib/use-place-order";
 import { OrderSummary, type FailedLine } from "@/components/new-order/order-summary";
 import { ProductCard } from "@/components/new-order/product-card";
+import { cn } from "cn";
+
+const FILTERS = [
+  { id: "all", label: "All" },
+  { id: "in", label: "In stock" },
+  { id: "low", label: "Low stock" },
+  { id: "out", label: "Out of stock" },
+] as const;
+
+type FilterId = (typeof FILTERS)[number]["id"];
 
 export default function NewOrderPage() {
   const router = useRouter();
   const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState<FilterId>("all");
   const [sheetOpen, setSheetOpen] = useState(false);
   const [stockError, setStockError] = useState<string | null>(null);
   const [failedLines, setFailedLines] = useState<FailedLine[]>([]);
@@ -45,12 +55,18 @@ export default function NewOrderPage() {
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return products;
-    return products.filter(
-      (p) =>
-        p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q),
-    );
-  }, [products, query]);
+    let rows = products;
+    if (q) {
+      rows = rows.filter(
+        (p) =>
+          p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q),
+      );
+    }
+    if (filter === "in") rows = rows.filter((p) => p.stock > 5);
+    if (filter === "low") rows = rows.filter((p) => p.stock >= 1 && p.stock <= 5);
+    if (filter === "out") rows = rows.filter((p) => p.stock <= 0);
+    return rows;
+  }, [products, query, filter]);
 
   const lines = useMemo(() => {
     const out: { product: (typeof products)[number]; qty: number }[] = [];
@@ -76,8 +92,8 @@ export default function NewOrderPage() {
       onSuccess: (order) => {
         clear();
         setSheetOpen(false);
-        toast.success(`Order ${order.reference} placed`);
-        router.push(`/orders/${order.reference}`);
+        toast.success("Order " + order.reference + " placed");
+        router.push("/orders/" + order.reference);
       },
       onError: (err) => {
         const e = err as unknown as PlaceOrderError;
@@ -90,7 +106,7 @@ export default function NewOrderPage() {
           const names = failed.map((f) => f.name).join(", ");
           setStockError(
             names
-              ? `Not enough stock for: ${names}`
+              ? "Not enough stock for: " + names
               : (e.message ?? "Insufficient stock"),
           );
           productsQuery.refetch();
@@ -118,14 +134,50 @@ export default function NewOrderPage() {
 
   return (
     <div>
-      <PageHeader
-        title="New Order"
-        subtitle="Take a phone order - pick products, confirm the total, submit."
-      />
+      <section className="mb-6 overflow-hidden border border-border bg-inkband text-white">
+        <div className="flex flex-col gap-4 p-5 sm:p-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="min-w-0">
+            <p className="text-[11px] font-bold uppercase tracking-widest text-white">
+              Staff phone orders
+            </p>
+            <h1 className="mt-1 text-xl font-bold tracking-tight sm:text-2xl">
+              Shop the catalogue, build the order
+            </h1>
+            <p className="mt-1 max-w-xl text-sm text-white">
+              Live stock, server-checked totals, one-tap submit. Everything stays in sync.
+            </p>
+            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium text-white">
+              <span className="flex items-center gap-1.5">
+                <Truck className="size-3.5" aria-hidden />
+                Ships in 24 hours
+              </span>
+              <span className="flex items-center gap-1.5">
+                <ShieldCheck className="size-3.5" aria-hidden />
+                Server-checked stock
+              </span>
+              <span className="flex items-center gap-1.5">
+                <BadgeCheck className="size-3.5" aria-hidden />
+                Easy cancel + restock
+              </span>
+            </div>
+          </div>
+          <div className="flex shrink-0 items-center gap-3 border border-white bg-inkband p-3">
+            <RotateCcw className="size-4 text-white" aria-hidden />
+            <div className="leading-tight">
+              <p className="text-sm font-bold text-white">Stock is live</p>
+              <p className="text-xs text-white">Refreshed on every order</p>
+            </div>
+            <Button variant="secondary" size="sm" onClick={() => productsQuery.refetch()}>
+              Refresh
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {productsQuery.isLoading ? (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="product-grid grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {Array.from({ length: 6 }).map((_, i) => (
-            <Skeleton key={i} className="h-44 w-full" />
+            <Skeleton key={i} className="h-64 w-full" />
           ))}
         </div>
       ) : productsQuery.isError ? (
@@ -140,7 +192,7 @@ export default function NewOrderPage() {
       ) : (
         <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
           <div className="min-w-0">
-            <div className="relative mb-4">
+            <div className="relative mb-3">
               <Search
                 className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
                 aria-hidden
@@ -148,19 +200,34 @@ export default function NewOrderPage() {
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search by name or SKU"
+                placeholder="Search products by name or SKU"
                 aria-label="Search catalogue"
-                className="pl-9"
+                className="bg-card pl-9"
               />
+            </div>
+            <div className="mb-4 flex flex-wrap gap-2" role="tablist" aria-label="Stock filter">
+              {FILTERS.map((f) => (
+                <Button
+                  key={f.id}
+                  role="tab"
+                  aria-selected={filter === f.id}
+                  variant={filter === f.id ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setFilter(f.id)}
+                  className={cn(filter !== f.id && "bg-card")}
+                >
+                  {f.label}
+                </Button>
+              ))}
             </div>
             {filtered.length === 0 ? (
               <Card className="border-border bg-card shadow-none">
                 <CardContent className="p-6 text-sm text-muted-foreground">
-                  {query.trim() ? "No products match your search." : "No products in the catalogue yet."}
+                  {query.trim() ? "No products match your search." : "No products in this view yet."}
                 </CardContent>
               </Card>
             ) : (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              <div className="product-grid grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 {filtered.map((p) => (
                   <ProductCard
                     key={p.id}
@@ -189,11 +256,11 @@ export default function NewOrderPage() {
         <div className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-card px-4 py-3 lg:hidden">
           <div className="mx-auto flex w-full max-w-7xl items-center gap-3">
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-semibold text-foreground">
+              <p className="text-sm font-bold text-foreground">
                 {formatCents(totalCents)}
               </p>
               <p className="text-xs text-muted-foreground">
-                {count} item{count === 1 ? "" : "s"} in cart
+                {count} items in cart
               </p>
             </div>
             <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
@@ -216,4 +283,3 @@ export default function NewOrderPage() {
     </div>
   );
 }
-

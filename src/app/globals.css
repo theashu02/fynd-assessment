@@ -1,8 +1,6 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-
-/* `dark:` variant follows the device preference (prefers-color-scheme) by default. */
 
 @theme inline {
   --color-background: var(--background);
@@ -18,11 +16,6 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -45,17 +38,22 @@
   --color-status-cancelled: var(--status-cancelled);
   --color-warning: var(--warning);
   --color-primary-hover: var(--primary-hover);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --color-mist: var(--mist);
+  --color-lake: var(--lake);
+  --color-on-lake: var(--on-lake);
+  --color-inkband: var(--inkband);
+  --color-on-inkband: var(--on-inkband);
+  --radius-sm: 0rem;
+  --radius-md: 0rem;
+  --radius-lg: 0rem;
+  --radius-xl: 0rem;
+  --radius-2xl: 0rem;
+  --radius-3xl: 0rem;
+  --radius-4xl: 0rem;
 }
 
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   --radius: 0rem;
   --background: #F1F5F9;
   --foreground: #0F172A;
@@ -82,123 +80,109 @@
   --border: #CBD5E1;
   --input: #CBD5E1;
   --ring: #1D4ED8;
-  --chart-1: #1D4ED8;
-  --chart-2: #0F766E;
-  --chart-3: #4338CA;
-  --chart-4: #F97316;
-  --chart-5: #F59E0B;
-  --sidebar: #0F172A;
-  --sidebar-foreground: #FFFFFF;
-  --sidebar-primary: #F97316;
+  --mist: #F4F4F4;
+  --lake: #1D4ED8;
+  --on-lake: #FFFFFF;
+  --inkband: #0F172A;
+  --on-inkband: #F4F4F4;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #0F172A;
+  --sidebar-primary: #1D4ED8;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #1E293B;
-  --sidebar-accent-foreground: #FFFFFF;
-  --sidebar-border: #1E293B;
-  --sidebar-ring: #F97316;
-}
-
-.dark {
-  --background: #0F172A;
-  --foreground: #F1F5F9;
-  --card: #1E293B;
-  --card-foreground: #F1F5F9;
-  --popover: #1E293B;
-  --popover-foreground: #F1F5F9;
-  --primary: #3B82F6;
-  --primary-hover: #60A5FA;
-  --primary-foreground: #FFFFFF;
-  --secondary: #1E293B;
-  --secondary-foreground: #F1F5F9;
-  --muted: #1E293B;
-  --muted-foreground: #94A3B8;
-  --accent: #F97316;
-  --accent-foreground: #0F172A;
-  --destructive: #EF4444;
-  --destructive-foreground: #FFFFFF;
-  --warning: #F59E0B;
-  --status-placed: #60A5FA;
-  --status-packed: #2DD4BF;
-  --status-shipped: #A5B4FC;
-  --status-cancelled: #EF4444;
-  --border: #334155;
-  --input: #334155;
-  --ring: #3B82F6;
-  --chart-1: #60A5FA;
-  --chart-2: #2DD4BF;
-  --chart-3: #A5B4FC;
-  --chart-4: #FB923C;
-  --chart-5: #FBBF24;
-  --sidebar: #020617;
-  --sidebar-foreground: #FFFFFF;
-  --sidebar-primary: #F97316;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #1E293B;
-  --sidebar-accent-foreground: #FFFFFF;
-  --sidebar-border: #1E293B;
-  --sidebar-ring: #F97316;
-}
-
-/* Follow the device light/dark preference (no JS needed). */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0F172A;
-    --foreground: #F1F5F9;
-    --card: #1E293B;
-    --card-foreground: #F1F5F9;
-    --popover: #1E293B;
-    --popover-foreground: #F1F5F9;
-    --primary: #3B82F6;
-    --primary-hover: #60A5FA;
-    --primary-foreground: #FFFFFF;
-    --secondary: #1E293B;
-    --secondary-foreground: #F1F5F9;
-    --muted: #1E293B;
-    --muted-foreground: #94A3B8;
-    --accent: #F97316;
-    --accent-foreground: #0F172A;
-    --destructive: #EF4444;
-    --destructive-foreground: #FFFFFF;
-    --warning: #F59E0B;
-    --status-placed: #60A5FA;
-    --status-packed: #2DD4BF;
-    --status-shipped: #A5B4FC;
-    --status-cancelled: #EF4444;
-    --border: #334155;
-    --input: #334155;
-    --ring: #3B82F6;
-    --chart-1: #60A5FA;
-    --chart-2: #2DD4BF;
-    --chart-3: #A5B4FC;
-    --chart-4: #FB923C;
-    --chart-5: #FBBF24;
-    --sidebar: #020617;
-    --sidebar-foreground: #FFFFFF;
-    --sidebar-primary: #F97316;
-    --sidebar-primary-foreground: #FFFFFF;
-    --sidebar-accent: #1E293B;
-    --sidebar-accent-foreground: #FFFFFF;
-    --sidebar-border: #1E293B;
-    --sidebar-ring: #F97316;
-  }
+  --sidebar-accent: #F1F5F9;
+  --sidebar-accent-foreground: #0F172A;
+  --sidebar-border: #CBD5E1;
+  --sidebar-ring: #1D4ED8;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none;
+  }
   body {
     @apply bg-background text-foreground;
+    text-rendering: optimizeLegibility;
   }
   button:not(:disabled), [role="button"]:not(:disabled) {
     cursor: pointer;
   }
-  html {
-    @apply font-sans;
+  ::selection {
+    background: #1D4ED8;
+    color: #FFFFFF;
+  }
+  :focus-visible {
+    outline: 2px solid #1D4ED8;
+    outline-offset: 2px;
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .hero-float {
+    animation: none;
+  }
+}
 
-/* Sonner toasts - solid colors only, no gradients. */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #CBD5E1 transparent;
+  }
+}
+
+@keyframes hero-float {
+  0% {
+    opacity: 0;
+    translate: 0 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    translate: 0 -24px;
+  }
+}
+.hero-float {
+  animation-name: hero-float;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 640px;
+}
+.product-grid {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
 li[data-sonner-toast][data-type="success"] {
   background-color: #0F766E;
   border-color: #0F766E;
@@ -220,7 +204,6 @@ li[data-sonner-toast][data-type="info"] {
   color: #FFFFFF;
 }
 
-/* Touch targets: 44px minimum for controls on coarse pointers. */
 @media (pointer: coarse) {
   button,
   a[href],
@@ -234,3 +217,4 @@ li[data-sonner-toast][data-type="info"] {
     min-width: 44px;
   }
 }
+
