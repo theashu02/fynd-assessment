@@ -2,9 +2,7 @@ import "dotenv/config";
 import { db } from "./index";
 import { products, type NewProduct } from "./schema";
 
-// Synthetic electronics/office catalogue. Exactly one product sits at
-// stock 0 (HEADNC-05) and one is low stock (PENGEL-07, qty 3).
-const CATALOGUE: NewProduct[] = [
+export const CATALOGUE: NewProduct[] = [
   {
     sku: "WMOUSE-01",
     name: "Wireless Mouse",
@@ -67,8 +65,7 @@ async function main() {
   if (!process.env.DATABASE_URL) {
     throw new Error("DATABASE_URL is not set. Copy .env.example to .env first.");
   }
-  // Upsert on SKU: re-running resets the catalogue (including stock)
-  // without ever duplicating products.
+  
   for (const item of CATALOGUE) {
     await db
       .insert(products)
@@ -85,12 +82,15 @@ async function main() {
   }
 }
 
-main()
-  .then(() => {
-    console.log(`Seeded ${CATALOGUE.length} products (stock reset, no duplicates).`);
-    process.exit(0);
-  })
-  .catch((err) => {
-    console.error("Seed failed:", err);
-    process.exit(1);
-  });
+const invokedDirectly = typeof process !== "undefined" && (process.argv[1] ?? "").replace(/\\/g, "/").endsWith("src/db/seed.ts");
+if (invokedDirectly) {
+  main()
+    .then(() => {
+      console.log(`Seeded ${CATALOGUE.length} products (stock reset, no duplicates).`);
+      process.exit(0);
+    })
+    .catch((err) => {
+      console.error("Seed failed:", err);
+      process.exit(1);
+    });
+}
