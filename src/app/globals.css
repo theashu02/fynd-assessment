@@ -69,9 +69,9 @@
   --secondary: #E2E8F0;
   --secondary-foreground: #0F172A;
   --muted: #E2E8F0;
-  --muted-foreground: #64748B;
+  --muted-foreground: #475569;
   --accent: #F97316;
-  --accent-foreground: #FFFFFF;
+  --accent-foreground: #0F172A;
   --destructive: #DC2626;
   --destructive-foreground: #FFFFFF;
   --warning: #F59E0B;
@@ -112,7 +112,7 @@
   --muted: #1E293B;
   --muted-foreground: #94A3B8;
   --accent: #F97316;
-  --accent-foreground: #FFFFFF;
+  --accent-foreground: #0F172A;
   --destructive: #EF4444;
   --destructive-foreground: #FFFFFF;
   --warning: #F59E0B;
@@ -155,7 +155,7 @@
     --muted: #1E293B;
     --muted-foreground: #94A3B8;
     --accent: #F97316;
-    --accent-foreground: #FFFFFF;
+    --accent-foreground: #0F172A;
     --destructive: #EF4444;
     --destructive-foreground: #FFFFFF;
     --warning: #F59E0B;
@@ -212,10 +212,25 @@ li[data-sonner-toast][data-type="error"] {
 li[data-sonner-toast][data-type="warning"] {
   background-color: #F59E0B;
   border-color: #F59E0B;
-  color: #FFFFFF;
+  color: #0F172A;
 }
 li[data-sonner-toast][data-type="info"] {
   background-color: #1D4ED8;
   border-color: #1D4ED8;
   color: #FFFFFF;
+}
+
+/* Touch targets: 44px minimum for controls on coarse pointers. */
+@media (pointer: coarse) {
+  button,
+  a[href],
+  input,
+  select,
+  [role="tab"],
+  [role="option"] {
+    min-height: 44px;
+  }
+  button:has(> svg:only-child) {
+    min-width: 44px;
+  }
 }

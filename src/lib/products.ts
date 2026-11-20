@@ -18,10 +18,12 @@ export async function fetchProducts() {
   return data;
 }
 
-export function useProducts() {
+export function useProducts(options?: { refetchIntervalMs?: number }) {
   return useQuery({
     queryKey: ["products"],
     queryFn: fetchProducts,
     staleTime: 15_000,
+    refetchInterval: options?.refetchIntervalMs ?? false,
   });
 }
+

@@ -24,7 +24,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
         const active = isActive(pathname, item.href);
         const Icon = item.icon;
         return (
-          <Link key={item.href} href={item.href} onClick={onNavigate} aria-current={active ? "page" : undefined} className={cn("flex items-center gap-3 px-3 py-2 text-sm font-medium", active ? "bg-primary text-primary-foreground" : "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-foreground")}>
+          <Link key={item.href} href={item.href} onClick={onNavigate} aria-current={active ? "page" : undefined} className={cn("flex min-h-11 items-center gap-3 px-3 py-2 text-sm font-medium", active ? "bg-primary text-primary-foreground" : "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-foreground")}>
             <Icon className="size-4 shrink-0" aria-hidden />
             {item.label}
           </Link>
