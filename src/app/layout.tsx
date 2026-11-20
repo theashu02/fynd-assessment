@@ -9,15 +9,15 @@ const ubuntu = Ubuntu({
 });
 
 export const metadata: Metadata = {
-  title: "Hello",
-  description: "Hello",
+  title: "Commerce Order Console",
+  description: "Staff console for phone orders",
 };
 
 export const viewport: Viewport = {
   colorScheme: "light dark",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+    { media: "(prefers-color-scheme: light)", color: "#F1F5F9" },
+    { media: "(prefers-color-scheme: dark)", color: "#0F172A" },
   ],
 };
 
