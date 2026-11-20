@@ -197,3 +197,25 @@
   }
 }
 
+
+/* Sonner toasts - solid colors only, no gradients. */
+li[data-sonner-toast][data-type="success"] {
+  background-color: #0F766E;
+  border-color: #0F766E;
+  color: #FFFFFF;
+}
+li[data-sonner-toast][data-type="error"] {
+  background-color: #DC2626;
+  border-color: #DC2626;
+  color: #FFFFFF;
+}
+li[data-sonner-toast][data-type="warning"] {
+  background-color: #F59E0B;
+  border-color: #F59E0B;
+  color: #FFFFFF;
+}
+li[data-sonner-toast][data-type="info"] {
+  background-color: #1D4ED8;
+  border-color: #1D4ED8;
+  color: #FFFFFF;
+}
