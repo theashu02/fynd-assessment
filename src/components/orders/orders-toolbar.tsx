@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "cn";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -11,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import type { OrderStatus } from "@/lib/orders";
 
 export type StatusFilter = "ALL" | OrderStatus;
@@ -24,9 +25,9 @@ export const STATUS_OPTIONS: { value: StatusFilter; label: string }[] = [
   { value: "CANCELLED", label: "Cancelled" },
 ];
 
-function CountBadge({ count }: { count: number }) {
+function CountBadge({ count, active }: { count: number; active?: boolean }) {
   return (
-    <span className="ml-1 inline-flex h-4 min-w-4 items-center justify-center bg-secondary px-1 text-[11px] font-semibold text-secondary-foreground">
+    <span className={cn("ml-1 inline-flex h-4 min-w-4 items-center justify-center px-1 text-[11px] font-semibold", active ? "bg-white/20 text-white" : "bg-secondary text-secondary-foreground")}>
       {count}
     </span>
   );
@@ -82,20 +83,29 @@ export function OrdersToolbar({
           </Button>
         </div>
       </div>
-      <Tabs
-        value={status}
-        onValueChange={(v) => onStatusChange(v as StatusFilter)}
-        className="hidden max-w-full overflow-x-auto sm:block"
+      <div
+        className="hidden flex-wrap gap-2 sm:flex"
+        role="tablist"
+        aria-label="Filter by status"
       >
-        <TabsList aria-label="Filter by status">
-          {STATUS_OPTIONS.map((opt) => (
-            <TabsTrigger key={opt.value} value={opt.value}>
+        {STATUS_OPTIONS.map((opt) => {
+          const selected = status === opt.value;
+          return (
+            <Button
+              key={opt.value}
+              role="tab"
+              aria-selected={selected}
+              variant={selected ? "default" : "outline"}
+              size="sm"
+              onClick={() => onStatusChange(opt.value)}
+              className={cn(!selected && "bg-card")}
+            >
               {opt.label}
-              <CountBadge count={counts[opt.value]} />
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs>
+              <CountBadge count={counts[opt.value]} active={selected} />
+            </Button>
+          );
+        })}
+      </div>
     </div>
   );
 }

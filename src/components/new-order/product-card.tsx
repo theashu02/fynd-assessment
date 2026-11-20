@@ -68,8 +68,8 @@ export function ProductCard({
           <Button
             onClick={onAdd}
             disabled={out}
-            className="mt-1 w-full border-destructive bg-destructive text-white hover:bg-destructive hover:text-white disabled:opacity-100"
-            variant="outline"
+            className="mt-1 w-full disabled:opacity-100"
+            variant={out ? "outline" : "default"}
           >
             {out ? "Out of stock" : "Add to order"}
           </Button>

@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+﻿import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function TableSkeleton({ rows = 5 }: { rows?: number }) {
@@ -50,3 +50,4 @@ export function DetailSkeleton() {
     </div>
   );
 }
+

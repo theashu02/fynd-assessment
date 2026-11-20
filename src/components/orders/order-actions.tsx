@@ -73,9 +73,9 @@ export function OrderActions({
       <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <AlertDialogTrigger asChild>
           <Button
-            variant="outline"
+            variant="destructive"
             disabled={isPending}
-            className="w-full border-destructive text-destructive hover:text-destructive"
+            className="w-full"
           >
             Cancel order
           </Button>
@@ -91,13 +91,14 @@ export function OrderActions({
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isPending}>Keep order</AlertDialogCancel>
             <AlertDialogAction
+              variant="destructive"
               disabled={isPending}
               onClick={(e) => {
                 e.preventDefault();
                 onCancel();
                 setConfirmOpen(false);
               }}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              
             >
               {isPending ? (
                 <>

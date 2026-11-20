@@ -1,8 +1,8 @@
-﻿"use client";
+"use client";
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { toast } from "@/components/ui/toast-manager";
 import { BadgeCheck, RotateCcw, Search, ShieldCheck, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -283,3 +283,4 @@ export default function NewOrderPage() {
     </div>
   );
 }
+

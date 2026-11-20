@@ -22,7 +22,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={ubuntu.className + " h-full antialiased"}>
-      <body className="min-h-full flex flex-col">
+      <body className="h-full overflow-hidden">
         <Providers>{children}</Providers>
       </body>
     </html>

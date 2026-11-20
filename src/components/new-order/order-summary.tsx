@@ -43,9 +43,7 @@ export function OrderSummary({
   if (lines.length === 0) {
     return (
       <div className="flex flex-col items-center gap-3 px-4 py-10 text-center">
-        <span className="flex size-14 items-center justify-center bg-muted">
-          <ShoppingCart className="size-6 text-muted-foreground" aria-hidden />
-        </span>
+        <ShoppingCart className="size-12 text-muted-foreground" aria-hidden />
         <p className="text-sm font-semibold text-foreground">Cart is empty</p>
         <p className="max-w-55 text-xs text-muted-foreground">
           Add products from the catalogue. Stock is checked again on the server.
