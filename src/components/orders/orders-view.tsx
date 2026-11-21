@@ -3,10 +3,9 @@
 import { Suspense, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { PageHeader } from "@/components/page-header";
-import { TableSkeleton } from "@/components/loading-skeletons";
-import { useOrders, type OrderSummaryRow } from "@/lib/orders";
+import { Button } from "@/components/ui";
+import { PageHeader, TableSkeleton } from "@/components/common";
+import { useOrders, type OrderSummaryRow } from "@/lib";
 import { OrdersToolbar, type StatusFilter } from "./orders-toolbar";
 import { OrdersTable } from "./orders-table";
 

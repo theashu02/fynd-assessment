@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import { DetailSkeleton } from "@/components/loading-skeletons";
-import { OrderDetailView } from "@/components/orders/order-detail-view";
+import { DetailSkeleton } from "@/components/common";
+import { OrderDetailView } from "@/components/orders";
 
 export default async function OrderDetailPage({
   params,

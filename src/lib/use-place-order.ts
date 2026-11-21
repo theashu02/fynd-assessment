@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { api } from "@/lib/api";
-import type { ProductDto } from "@/lib/products";
+import { api } from "./api";
+import type { ProductDto } from "./products";
 
 export type StockFailure = {
   productId: string;

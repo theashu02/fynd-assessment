@@ -2,23 +2,28 @@
 
 import { useMemo } from "react";
 import { Package, RefreshCw, AlertCircle, TrendingDown, BarChart3 } from "lucide-react";
-import { toast } from "@/components/ui/toast-manager";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Skeleton,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Skeleton } from "@/components/ui/skeleton";
-import { TableSkeleton } from "@/components/loading-skeletons";
-import { PageHeader } from "@/components/page-header";
-import { formatCents } from "@/lib/format";
-import { useProducts } from "@/lib/products";
-import { StockBadge } from "@/components/new-order/stock-badge";
+  toast,
+} from "@/components/ui";
+import {
+  EmptyState,
+  PageHeader,
+  StockBadge,
+  TableSkeleton,
+} from "@/components/common";
+import { formatCents, useProducts } from "@/lib";
 import { StockBar } from "./stock-bar";
 
 type StatCardProps = {
@@ -88,7 +93,7 @@ export function ProductsView() {
         />
         <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
           {Array.from({ length: 3 }).map((_, i) => (
-            <Skeleton key={i} className="h-[76px] w-full" />
+            <Skeleton key={i} className="h-19 w-full" />
           ))}
         </div>
         <TableSkeleton rows={8} />
@@ -164,25 +169,19 @@ export function ProductsView() {
       ) : null}
 
       {products.length === 0 ? (
-        <Card className="border-border bg-card shadow-none">
-          <CardContent className="flex flex-col items-center gap-3 px-4 py-10 text-center">
-            <span className="flex size-14 items-center justify-center rounded-md bg-muted">
-              <Package className="size-6 text-muted-foreground" aria-hidden />
-            </span>
-            <p className="text-sm font-semibold text-foreground">
-              No products found
-            </p>
-            <p className="max-w-55 text-xs text-muted-foreground">
-              Products will appear here once the catalogue is seeded.
-            </p>
+        <EmptyState
+          icon={Package}
+          title="No products found"
+          description="Products will appear here once the catalogue is seeded."
+          action={
             <Button variant="outline" onClick={handleRefresh}>
               Refresh
             </Button>
-          </CardContent>
-        </Card>
+          }
+        />
       ) : (
         <>
-          <Card className="hidden border-border bg-card shadow-none [overflow:visible] md:block">
+          <Card className="hidden border-border bg-card shadow-none overflow-visible md:block">
             <CardHeader>
               <CardTitle>All products</CardTitle>
             </CardHeader>

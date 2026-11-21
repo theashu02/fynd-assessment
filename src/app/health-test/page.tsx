@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { api } from "@/lib/api";
-import { Badge } from "@/components/ui/badge";
+import { api } from "@/lib";
 import {
+  Badge,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui";
 
 type Probe = "loading" | "ok" | "error";
 

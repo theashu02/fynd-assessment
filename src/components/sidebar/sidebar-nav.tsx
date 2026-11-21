@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { cn } from "cn";
-import { Button } from "@/components/ui/button";
 import { SIDEBAR_ROUTES, isRouteActive, type SidebarRoute } from "./sidebar-data";
 import { SidebarTip } from "./sidebar-tip";
 
@@ -18,39 +17,38 @@ function SidebarNavItem({
   const Icon = route.icon;
   return (
     <SidebarTip label={route.name} collapsed={collapsed}>
-      <Button
-        asChild
-        variant="ghost"
+      <Link
+        href={route.href}
+        aria-label={route.name}
+        aria-current={active ? "page" : undefined}
         className={cn(
-          "group relative h-10 w-full rounded-md border px-3 text-[13px] font-medium transition-colors",
+          "group relative flex h-10 w-full items-center rounded-md border px-3 text-[13px] font-medium transition-colors duration-150 outline-none select-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50",
           collapsed ? "justify-center px-0" : "justify-start gap-3",
           active
-            ? "border-inkband/20 bg-inkband text-white hover:bg-inkband/90 hover:text-white"
+            ? "border-inkband/20 bg-inkband text-white hover:bg-inkband/80 hover:text-white"
             : "border-transparent bg-transparent text-muted-foreground hover:border-border hover:bg-sidebar-accent hover:text-foreground",
         )}
       >
-        <Link href={route.href} aria-current={active ? "page" : undefined}>
-          <span
-            className={cn(
-              "absolute top-1/2 left-0 h-5 w-0.75 -translate-y-1/2 rounded-full bg-accent",
-              active ? "opacity-100" : "opacity-0 group-hover:opacity-40",
-            )}
-            aria-hidden="true"
-          />
-          <span
-            className={cn(
-              "flex size-4 shrink-0 items-center justify-center transition-colors",
-              active ? "text-accent" : "text-muted-foreground group-hover:text-foreground",
-            )}
-          >
-            <Icon className="size-4" aria-hidden="true" />
-          </span>
-          {!collapsed && <span className="truncate">{route.name}</span>}
-          {!collapsed && active && (
-            <span className="ml-auto size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+        <span
+          className={cn(
+            "absolute top-1/2 left-0 h-5 w-0.75 -translate-y-1/2 rounded-full bg-accent",
+            active ? "opacity-100" : "opacity-0 group-hover:opacity-40",
           )}
-        </Link>
-      </Button>
+          aria-hidden="true"
+        />
+        <span
+          className={cn(
+            "flex size-4 shrink-0 items-center justify-center transition-colors duration-150",
+            active ? "text-accent" : "text-muted-foreground group-hover:text-foreground",
+          )}
+        >
+          <Icon className="size-4" aria-hidden="true" />
+        </span>
+        {!collapsed && <span className="truncate">{route.name}</span>}
+        {!collapsed && active && (
+          <span className="ml-auto size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+        )}
+      </Link>
     </SidebarTip>
   );
 }

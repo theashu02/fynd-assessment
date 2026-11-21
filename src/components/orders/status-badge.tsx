@@ -1,5 +1,5 @@
 import { cn } from "cn";
-import type { OrderStatus } from "@/lib/orders";
+import type { OrderStatus } from "@/lib";
 
 const STATUS_STYLES: Record<OrderStatus, string> = {
   PLACED: "bg-status-placed text-white",

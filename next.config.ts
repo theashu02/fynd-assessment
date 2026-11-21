@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
+const NGROK_HOST = "nonpresidential-lukas-postaxial.ngrok-free.dev";
+
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
@@ -10,6 +11,16 @@ const nextConfig: NextConfig = {
   },
   cacheComponents: true,
   partialPrefetching: true,
+  experimental: {
+    serverActions: {
+      allowedOrigins: [
+        NGROK_HOST,
+        "*.ngrok-free.dev",
+        "*.ngrok.io",
+        "*.ngrok.app",
+      ],
+    },
+  },
   turbopack: {
     rules: {
       "*.css": {

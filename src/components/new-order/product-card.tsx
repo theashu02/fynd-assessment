@@ -8,11 +8,9 @@ import {
   Star,
 } from "lucide-react";
 import { cn } from "cn";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { formatCents } from "@/lib/format";
-import type { ProductDto } from "@/lib/products";
-import { StockBadge } from "./stock-badge";
+import { Button, Card } from "@/components/ui";
+import { StockBadge } from "@/components/common";
+import { formatCents, type ProductDto } from "@/lib";
 
 type Product = ProductDto[number];
 
@@ -123,7 +121,7 @@ export function ProductCard({
           <Button
             onClick={onAdd}
             disabled={out}
-            className="w-full disabled:opacity-100"
+            className="w-full disabled:opacity-100 text-[14px]"
             variant={out ? "outline" : "default"}
             size="lg"
           >

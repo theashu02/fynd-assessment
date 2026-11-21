@@ -1,18 +1,18 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { cn } from "cn";
-import { Button } from "@/components/ui/button";
 import {
+  Button,
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { TooltipProvider } from "@/components/ui/tooltip";
+  TooltipProvider,
+} from "@/components/ui";
 import { SidebarBrand } from "./sidebar-brand";
 import { SidebarNav } from "./sidebar-nav";
 import { SidebarFooter } from "./sidebar-footer";
@@ -25,7 +25,7 @@ export function AppSidebar() {
     <TooltipProvider delayDuration={100}>
       <aside
         className={cn(
-          "hidden h-screen shrink-0 flex-col overflow-visible bg-background transition-[width] duration-150 ease-in-out md:flex border-r",
+          "hidden h-full shrink-0 flex-col overflow-visible bg-background transition-[width] duration-150 ease-in-out md:flex border-r",
           isCollapsed ? "md:w-14" : "md:w-48",
         )}
       >
@@ -53,23 +53,23 @@ export function MobileSidebar() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button
-          variant="outline"
+          variant="ghost"
           size="icon"
           aria-label="Open menu"
-          className="rounded-md bg-card shadow-sm md:hidden"
+          className="size-9 shrink-0 rounded-md md:hidden"
         >
-          <Menu className="h-5 w-5" />
+          <Menu className="size-5" />
         </Button>
       </SheetTrigger>
       <SheetContent
         side="left"
         showCloseButton={false}
-        className="w-64 gap-0 border-border bg-background p-0 text-card-foreground duration-150 data-open:slide-in-from-left-4 data-closed:slide-out-to-left-4"
+        className="w-56 gap-0 border-r border-border bg-background p-0 text-card-foreground"
       >
         <SheetHeader className="sr-only text-left">
           <SheetTitle>Navigation</SheetTitle>
         </SheetHeader>
-        <div className="flex h-full min-h-0 flex-col bg-background">
+        <div className="flex h-full min-h-0 flex-col">
           <SidebarBrand
             collapsed={false}
             onToggle={() => setOpen(false)}
@@ -79,7 +79,7 @@ export function MobileSidebar() {
                 size="icon"
                 onClick={() => setOpen(false)}
                 aria-label="Close menu"
-                className="size-7 shrink-0 border border-border bg-card text-foreground hover:border-inkband hover:bg-inkband hover:text-white"
+                className="size-8 shrink-0 text-muted-foreground hover:bg-muted hover:text-foreground"
               >
                 <X className="size-4" />
               </Button>
