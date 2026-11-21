@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/toast-manager";
-import { BadgeCheck, RotateCcw, Search, ShieldCheck, Truck } from "lucide-react";
+import { PackageSearch, RotateCcw, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -15,6 +15,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PageHeader } from "@/components/page-header";
 import { useProducts } from "@/lib/products";
 import { formatCents } from "@/lib/format";
 import { cartCount, useCartStore } from "@/stores/cart-store";
@@ -31,6 +32,9 @@ const FILTERS = [
 ] as const;
 
 type FilterId = (typeof FILTERS)[number]["id"];
+
+const PRODUCT_GRID =
+  "product-grid grid grid-cols-1 gap-6 p-1 sm:grid-cols-2 sm:p-2 lg:grid-cols-1 lg:gap-8 xl:grid-cols-2 2xl:grid-cols-3";
 
 export default function NewOrderPage() {
   const router = useRouter();
@@ -117,6 +121,11 @@ export default function NewOrderPage() {
     });
   }
 
+  function clearSearchAndFilters() {
+    setQuery("");
+    setFilter("all");
+  }
+
   const summary = (
     <OrderSummary
       lines={lines}
@@ -134,48 +143,26 @@ export default function NewOrderPage() {
 
   return (
     <div>
-      <section className="mb-6 overflow-hidden rounded-md border border-border bg-inkband text-white">
-        <div className="flex flex-col gap-4 p-5 sm:p-6 lg:flex-row lg:items-center lg:justify-between">
-          <div className="min-w-0">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-white">
-              Staff phone orders
-            </p>
-            <h1 className="mt-1 text-xl font-bold tracking-tight sm:text-2xl">
-              Shop the catalogue, build the order
-            </h1>
-            <p className="mt-1 max-w-xl text-sm text-white">
-              Live stock, server-checked totals, one-tap submit. Everything stays in sync.
-            </p>
-            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium text-white">
-              <span className="flex items-center gap-1.5">
-                <Truck className="size-3.5" aria-hidden />
-                Ships in 24 hours
-              </span>
-              <span className="flex items-center gap-1.5">
-                <ShieldCheck className="size-3.5" aria-hidden />
-                Server-checked stock
-              </span>
-              <span className="flex items-center gap-1.5">
-                <BadgeCheck className="size-3.5" aria-hidden />
-                Easy cancel + restock
-              </span>
-            </div>
-          </div>
-          <div className="flex shrink-0 items-center gap-3 rounded-md border border-white bg-inkband p-3">
-            <RotateCcw className="size-4 text-white" aria-hidden />
-            <div className="leading-tight">
-              <p className="text-sm font-bold text-white">Stock is live</p>
-              <p className="text-xs text-white">Refreshed on every order</p>
-            </div>
-            <Button variant="secondary" size="sm" onClick={() => productsQuery.refetch()}>
-              Refresh
-            </Button>
-          </div>
-        </div>
-      </section>
+      <PageHeader
+        title="New orders"
+        subtitle="Search the catalogue and build the order. Stock is checked live."
+        action={
+          <Button
+            variant="outline"
+            onClick={() => productsQuery.refetch()}
+            disabled={productsQuery.isFetching}
+          >
+            <RotateCcw
+              className={cn("size-4", productsQuery.isFetching && "animate-spin")}
+              aria-hidden
+            />
+            Refresh
+          </Button>
+        }
+      />
 
       {productsQuery.isLoading ? (
-        <div className="product-grid grid grid-cols-1 gap-6 sm:grid-cols-2 lg:gap-8">
+        <div className={PRODUCT_GRID}>
           {Array.from({ length: 4 }).map((_, i) => (
             <Skeleton key={i} className="h-[480px] w-full rounded-2xl" />
           ))}
@@ -200,9 +187,9 @@ export default function NewOrderPage() {
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search products by name"
+                placeholder="Search products by name or SKU"
                 aria-label="Search catalogue"
-                className="h-12 bg-card pl-9 text-base!"
+                className="h-10 bg-card pl-9 text-sm"
               />
             </div>
             <div className="mb-4 flex flex-wrap gap-2" role="tablist" aria-label="Stock filter">
@@ -222,12 +209,27 @@ export default function NewOrderPage() {
             </div>
             {filtered.length === 0 ? (
               <Card className="border-border bg-card shadow-none">
-                <CardContent className="p-6 text-sm text-muted-foreground">
-                  {query.trim() ? "No products match your search." : "No products in this view yet."}
+                <CardContent className="flex flex-col items-center gap-3 px-4 py-10 text-center">
+                  <span className="flex size-14 items-center justify-center rounded-md bg-muted">
+                    <PackageSearch className="size-6 text-muted-foreground" aria-hidden />
+                  </span>
+                  <p className="text-sm font-semibold text-foreground">
+                    No products found
+                  </p>
+                  <p className="max-w-55 text-xs text-muted-foreground">
+                    {query.trim()
+                      ? "No products match your search."
+                      : "No products in this view yet."}
+                  </p>
+                  {query.trim() || filter !== "all" ? (
+                    <Button variant="outline" onClick={clearSearchAndFilters}>
+                      Clear search &amp; filters
+                    </Button>
+                  ) : null}
                 </CardContent>
               </Card>
             ) : (
-              <div className="product-grid grid grid-cols-1 gap-6 p-1 sm:grid-cols-2 sm:p-2 lg:gap-8">
+              <div className={PRODUCT_GRID}>
                 {filtered.map((p) => (
                   <ProductCard
                     key={p.id}
@@ -243,7 +245,7 @@ export default function NewOrderPage() {
             <div className="h-20 lg:hidden" />
           </div>
           <div className="hidden lg:block">
-            <CardContent>{summary}</CardContent>
+            <div className="sticky top-6">{summary}</div>
           </div>
         </div>
       )}
@@ -251,10 +253,10 @@ export default function NewOrderPage() {
         <div className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-card px-4 py-3 lg:hidden">
           <div className="mx-auto flex w-full max-w-7xl items-center gap-3">
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-bold text-foreground">
+              <p className="text-sm font-bold text-foreground tabular-nums">
                 {formatCents(totalCents)}
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-muted-foreground tabular-nums">
                 {count} items in cart
               </p>
             </div>
@@ -278,4 +280,3 @@ export default function NewOrderPage() {
     </div>
   );
 }
-

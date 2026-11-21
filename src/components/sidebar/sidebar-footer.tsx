@@ -42,10 +42,10 @@ export function SidebarFooter({ collapsed }: SidebarFooterProps) {
           </p>
           <Link
             href="/products"
-            className="mt-2 flex h-9 items-center justify-start gap-2 overflow-hidden rounded-md border border-inkband bg-inkband px-3 text-xs font-bold tracking-wide whitespace-nowrap text-white uppercase transition-colors hover:border-inkband/90 hover:bg-inkband/90 hover:text-white active:scale-[0.98]"
+            className="mt-2 flex h-9 items-center justify-center gap-2 overflow-hidden rounded-md border border-inkband bg-inkband px-3 text-xs font-bold tracking-wide whitespace-nowrap text-white uppercase transition-colors hover:border-inkband/90 hover:bg-inkband/90 hover:text-white"
           >
             <Package className="size-3.5 shrink-0" aria-hidden="true" />
-            <span className="truncate">Check live stock</span>
+            <span className="truncate">live stock</span>
           </Link>
         </div>
       )}

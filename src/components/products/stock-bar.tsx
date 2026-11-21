@@ -1,11 +1,9 @@
-const TEAL = "#0F766E";
-const ORANGE = "#F97316";
-const RED = "#DC2626";
+import { cn } from "cn";
 
 export function stockFill(stock: number): string {
-  if (stock <= 0) return RED;
-  if (stock <= 5) return ORANGE;
-  return TEAL;
+  if (stock <= 0) return "bg-destructive";
+  if (stock <= 5) return "bg-accent";
+  return "bg-success";
 }
 
 export function StockBar({ stock, max }: { stock: number; max: number }) {
@@ -21,21 +19,21 @@ export function StockBar({ stock, max }: { stock: number; max: number }) {
         aria-label={`Stock level ${stock} of ${max}`}
       >
         <div
-          className="h-full rounded-full"
+          className={cn("h-full rounded-full", stockFill(stock))}
           style={{
             width: `${pct}%`,
-            backgroundColor: stockFill(stock),
             minWidth: stock > 0 ? 4 : 0,
           }}
         />
       </div>
       <span
-        className="w-8 shrink-0 text-right text-xs font-semibold text-foreground"
-        style={stock <= 0 ? { color: RED } : undefined}
+        className={cn(
+          "w-8 shrink-0 text-right text-xs font-semibold tabular-nums",
+          stock <= 0 ? "text-destructive" : "text-foreground",
+        )}
       >
         {stock}
       </span>
     </div>
   );
 }
-

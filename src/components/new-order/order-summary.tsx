@@ -1,8 +1,10 @@
+import Image from "next/image";
 import {
   AlertCircle,
   Loader2,
   Lock,
   Minus,
+  Package,
   Plus,
   ShoppingBag,
   Trash2,
@@ -24,6 +26,24 @@ export type FailedLine = {
   available: number;
   name: string;
 };
+
+function LineThumbnail({ product }: { product: Product }) {
+  return (
+    <span className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-md bg-mist">
+      {product.imageUrl ? (
+        <Image
+          src={product.imageUrl}
+          alt=""
+          fill
+          sizes="40px"
+          className="object-cover"
+        />
+      ) : (
+        <Package className="size-4 text-muted-foreground" aria-hidden />
+      )}
+    </span>
+  );
+}
 
 export function OrderSummary({
   lines,
@@ -52,15 +72,15 @@ export function OrderSummary({
 
   if (lines.length === 0) {
     return (
-      <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+      <div className="rounded-md border border-border bg-card p-6 shadow-sm">
         <div className="flex flex-col items-center justify-center py-10 text-center">
-          {/* <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-muted text-muted-foreground"> */}
-            <ShoppingBag className="size-12" aria-hidden />
-          {/* </div> */}
-          <h3 className="text-lg font-semibold tracking-tight text-foreground">
+          <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
+            <ShoppingBag className="size-6" aria-hidden />
+          </div>
+          <h3 className="text-base font-semibold tracking-tight text-foreground">
             Your cart is empty
           </h3>
-          <p className="mt-1.5 max-w-57.5 text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-1.5 max-w-60 text-sm leading-relaxed text-muted-foreground">
             Add products from the catalogue to get started. Inventory is
             verified automatically at checkout.
           </p>
@@ -72,11 +92,11 @@ export function OrderSummary({
   return (
     <section
       aria-label="Order summary"
-      className="flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm"
+      className="flex flex-col overflow-hidden rounded-md border border-border bg-card shadow-sm"
     >
       {/* Header */}
       <div className="flex items-center justify-between border-b border-border px-5 py-4">
-        <h2 className="text-sm font-semibold tracking-tight text-foreground">
+        <h2 className="text-base font-semibold tracking-tight text-foreground">
           Order summary
         </h2>
         <span className="inline-flex items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground tabular-nums">
@@ -89,7 +109,7 @@ export function OrderSummary({
         <div className="px-5 pt-4">
           <div
             role="alert"
-            className="flex gap-2.5 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive"
+            className="flex gap-2.5 rounded-md border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive"
           >
             <AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden />
             <div className="space-y-1">
@@ -118,8 +138,9 @@ export function OrderSummary({
           return (
             <li
               key={product.id}
-              className="group flex items-start justify-between gap-4 py-4"
+              className="group flex items-start justify-between gap-3 py-4"
             >
+              <LineThumbnail product={product} />
               <div className="min-w-0 flex-1 space-y-2">
                 <div>
                   <p className="truncate text-sm font-medium leading-tight text-foreground">
@@ -132,7 +153,7 @@ export function OrderSummary({
                         · Only {failed.available} available
                       </span>
                     ) : atMaxStock ? (
-                      <span className="text-amber-600 dark:text-amber-400">
+                      <span className="font-medium text-ember">
                         · Max stock reached
                       </span>
                     ) : null}
@@ -146,7 +167,7 @@ export function OrderSummary({
                     onClick={() => onDecrement(product.id)}
                     disabled={isPending}
                     aria-label={`Decrease ${product.name}`}
-                    className="flex size-7 items-center justify-center rounded-l-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-40"
+                    className="flex size-7 items-center justify-center rounded-l-md text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-40"
                   >
                     <Minus className="size-3" aria-hidden />
                   </button>
@@ -158,7 +179,7 @@ export function OrderSummary({
                     onClick={() => onIncrement(product)}
                     disabled={isPending || atMaxStock}
                     aria-label={`Increase ${product.name}`}
-                    className="flex size-7 items-center justify-center rounded-r-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-40"
+                    className="flex size-7 items-center justify-center rounded-r-md text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-40"
                   >
                     <Plus className="size-3" aria-hidden />
                   </button>
@@ -176,7 +197,7 @@ export function OrderSummary({
                   onClick={() => onRemove(product.id)}
                   disabled={isPending}
                   aria-label={`Remove ${product.name}`}
-                  className="text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
+                  className="text-muted-foreground transition-colors duration-150 hover:bg-destructive/10 hover:text-destructive"
                 >
                   <Trash2 className="size-3.5" aria-hidden />
                 </Button>
@@ -214,7 +235,7 @@ export function OrderSummary({
           )}
         </Button>
 
-        <p className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground">
+        <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
           <Lock className="size-3" aria-hidden />
           Inventory is verified live when you place your order
         </p>

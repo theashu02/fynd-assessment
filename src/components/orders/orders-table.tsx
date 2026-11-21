@@ -109,14 +109,14 @@ export function OrdersTable({
 
   return (
     <div aria-busy={isFetching} className={isFetching ? "opacity-70" : undefined}>
-      <Card className="hidden border-border bg-card shadow-none md:block">
+      <Card className="hidden border-border bg-card shadow-none [overflow:visible] md:block">
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Reference</TableHead>
               <TableHead>Date</TableHead>
-              <TableHead>Items</TableHead>
-              <TableHead>Total</TableHead>
+              <TableHead className="text-right">Items</TableHead>
+              <TableHead className="text-right">Total</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="text-right">Action</TableHead>
             </TableRow>
@@ -134,8 +134,8 @@ export function OrdersTable({
               >
                 <TableCell className="font-medium">{row.reference}</TableCell>
                 <TableCell>{formatDate(row.createdAt)}</TableCell>
-                <TableCell>{row.itemCount}</TableCell>
-                <TableCell>{formatCents(row.totalCents)}</TableCell>
+                <TableCell className="text-right tabular-nums">{row.itemCount}</TableCell>
+                <TableCell className="text-right font-semibold tabular-nums">{formatCents(row.totalCents)}</TableCell>
                 <TableCell>
                   <StatusBadge status={row.status} />
                 </TableCell>
@@ -177,7 +177,7 @@ export function OrdersTable({
                 <span>
                   {row.itemCount} item{row.itemCount === 1 ? "" : "s"}
                 </span>
-                <span className="text-sm font-semibold text-foreground">
+                <span className="text-sm font-semibold text-foreground tabular-nums">
                   {formatCents(row.totalCents)}
                 </span>
               </div>

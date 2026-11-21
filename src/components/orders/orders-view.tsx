@@ -1,7 +1,9 @@
 "use client";
 
 import { Suspense, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/page-header";
 import { TableSkeleton } from "@/components/loading-skeletons";
 import { useOrders, type OrderSummaryRow } from "@/lib/orders";
@@ -87,6 +89,11 @@ function OrdersContent() {
       <PageHeader
         title="Orders"
         subtitle="Search by reference, filter by status, open details."
+        action={
+          <Button asChild>
+            <Link href="/orders/new">New order</Link>
+          </Button>
+        }
       />
       <OrdersToolbar
         searchInput={searchInput}

@@ -25,12 +25,12 @@ export function SidebarBrand({ collapsed, onToggle, action }: SidebarBrandProps)
             className="group relative size-9 shrink-0 bg-inkband text-white transition-colors hover:bg-inkband/90"
           >
             <Package2
-              className="size-4 transition-all duration-150 group-hover:scale-75 group-hover:opacity-0 group-focus-visible:scale-75 group-focus-visible:opacity-0"
+              className="size-4 transition-[transform,opacity] duration-150 group-hover:scale-75 group-hover:opacity-0 group-focus-visible:scale-75 group-focus-visible:opacity-0"
               aria-hidden="true"
             />
             
             <ChevronsRight
-              className="absolute size-4 scale-75 opacity-0 transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100"
+              className="absolute size-4 scale-75 opacity-0 transition-[transform,opacity] duration-150 group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100"
               aria-hidden="true"
             />
           </Button>

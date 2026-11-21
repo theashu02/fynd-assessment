@@ -42,7 +42,8 @@ export function OrderActions({
       <Button
         onClick={() => onAdvance(next)}
         disabled={isPending}
-        className="w-full"
+        className="w-full text-[14px]"
+        size="lg"
       >
         {isPending ? (
           <>
@@ -58,7 +59,8 @@ export function OrderActions({
           <Button
             variant="destructive"
             disabled={isPending}
-            className="w-full"
+            className="w-full text-[14px]"
+            size="lg"
           >
             Cancel order
           </Button>

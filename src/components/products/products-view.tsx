@@ -25,21 +25,26 @@ type StatCardProps = {
   label: string;
   value: number;
   icon: React.ElementType;
-  iconBg: string;
-  iconColor: string;
+  tone: string;
 };
 
 function StatCard({
   label,
   value,
   icon: Icon,
-  iconColor,
+  tone,
 }: StatCardProps) {
   return (
-    <div className="flex items-center gap-2 px-3 py-3 sm:px-4">
-      <Icon className="size-5 shrink-0 sm:size-6" style={{ color: iconColor }} aria-hidden />
-      <span className="text-lg font-bold text-foreground sm:text-xl">{value}</span>
-      <span className="truncate text-xs text-muted-foreground sm:text-sm">{label}</span>
+    <div className="flex items-center gap-3 p-1">
+      <Icon className={`size-8 shrink-0 ${tone}`} aria-hidden />
+      <span className="min-w-0">
+        <span className="block text-xl font-bold tabular-nums text-foreground">
+          {value}
+        </span>
+        <span className="block truncate text-xs text-muted-foreground">
+          {label}
+        </span>
+      </span>
     </div>
   );
 }
@@ -81,9 +86,9 @@ export function ProductsView() {
           title="Catalogue"
           subtitle="Live stock levels. Auto-refreshes every 15 seconds."
         />
-        <div className="mb-4 grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-4">
+        <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
           {Array.from({ length: 3 }).map((_, i) => (
-            <Skeleton key={i} className="h-[60px] w-full sm:h-[72px]" />
+            <Skeleton key={i} className="h-[76px] w-full" />
           ))}
         </div>
         <TableSkeleton rows={8} />
@@ -130,27 +135,24 @@ export function ProductsView() {
         }
       />
 
-      <div className="mb-1 grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-4">
+      <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <StatCard
           label="Total Products"
           value={totalProducts}
           icon={BarChart3}
-          iconBg="#EFF6FF"
-          iconColor="#1D4ED8"
+          tone="text-info"
         />
         <StatCard
           label="Out of Stock"
           value={outCount}
           icon={AlertCircle}
-          iconBg="#FEF2F2"
-          iconColor="#DC2626"
+          tone="text-destructive"
         />
         <StatCard
           label="Low Stock"
           value={lowCount}
           icon={TrendingDown}
-          iconBg="#FFF7ED"
-          iconColor="#EA580C"
+          tone="text-ember"
         />
       </div>
 
@@ -173,11 +175,14 @@ export function ProductsView() {
             <p className="max-w-55 text-xs text-muted-foreground">
               Products will appear here once the catalogue is seeded.
             </p>
+            <Button variant="outline" onClick={handleRefresh}>
+              Refresh
+            </Button>
           </CardContent>
         </Card>
       ) : (
         <>
-          <Card className="hidden border-border bg-card shadow-none md:block">
+          <Card className="hidden border-border bg-card shadow-none [overflow:visible] md:block">
             <CardHeader>
               <CardTitle>All products</CardTitle>
             </CardHeader>
@@ -186,7 +191,7 @@ export function ProductsView() {
                 <TableHeader>
                   <TableRow>
                     <TableHead>Product</TableHead>
-                    <TableHead>Price</TableHead>
+                    <TableHead className="text-right">Price</TableHead>
                     <TableHead className="w-45">Stock level</TableHead>
                     <TableHead>Status</TableHead>
                   </TableRow>
@@ -198,7 +203,7 @@ export function ProductsView() {
                         <p className="font-medium">{p.name}</p>
                         <p className="text-xs text-muted-foreground">{p.sku}</p>
                       </TableCell>
-                      <TableCell>{formatCents(p.priceCents)}</TableCell>
+                      <TableCell className="text-right font-semibold tabular-nums">{formatCents(p.priceCents)}</TableCell>
                       <TableCell>
                         <StockBar stock={p.stock} max={scaleMax} />
                       </TableCell>
@@ -227,7 +232,7 @@ export function ProductsView() {
                     </div>
                     <StockBadge stock={p.stock} />
                   </div>
-                  <p className="text-sm font-bold text-foreground">
+                  <p className="text-sm font-bold text-foreground tabular-nums">
                     {formatCents(p.priceCents)}
                   </p>
                   <StockBar stock={p.stock} max={scaleMax} />

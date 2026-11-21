@@ -14,7 +14,7 @@ export function OrderTimeline({ status }: { status: OrderStatus }) {
     return (
       <div
         role="status"
-        className="flex flex-col items-center gap-3 rounded-md border border-destructive/20 bg-destructive/5 p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md sm:p-8"
+        className="flex flex-col items-center gap-3 rounded-md border border-destructive/20 bg-destructive/5 p-6 text-center shadow-sm sm:p-8"
       >
         <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-destructive/10 text-destructive sm:size-14">
           <XCircle className="size-6 sm:size-7" aria-hidden />
@@ -33,13 +33,14 @@ export function OrderTimeline({ status }: { status: OrderStatus }) {
 
   const currentIndex = STEPS.findIndex((s) => s.key === status);
   const progress = (currentIndex / (STEPS.length - 1)) * 100;
+  const complete = progress >= 100;
 
   return (
-    <div className="rounded-md border border-border bg-card p-5 shadow-sm transition-shadow duration-300 hover:shadow-md sm:p-6">
+    <div className="rounded-md border border-border bg-card p-5 shadow-sm sm:p-6">
       <div className="relative">
         <div className="absolute left-5 right-5 top-5 h-1.5 -translate-y-1/2 overflow-hidden rounded-full bg-muted" aria-hidden>
           <div
-            className="h-full rounded-full bg-gradient-to-r from-success to-info transition-all duration-700 ease-out"
+            className={cn("h-full rounded-full", complete ? "bg-success" : "bg-info")}
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -56,16 +57,13 @@ export function OrderTimeline({ status }: { status: OrderStatus }) {
               >
                 <span
                   className={cn(
-                    "relative flex size-10 items-center justify-center rounded-full border-2 transition-all duration-300",
-                    done && "border-success bg-success text-success-foreground shadow-md shadow-success/25",
-                    current && "border-info bg-info text-info-foreground shadow-lg shadow-info/30 ring-4 ring-info/15",
-                    !done && !current && "border-border bg-card text-muted-foreground shadow-sm",
+                    "relative flex size-10 items-center justify-center rounded-full border-2 transition-colors duration-150",
+                    done && "border-success bg-success text-success-foreground",
+                    current && "border-info bg-info text-info-foreground shadow-sm ring-4 ring-info/15",
+                    !done && !current && "border-border bg-card text-muted-foreground",
                   )}
                   aria-hidden
                 >
-                  {current && (
-                    <span className="absolute inset-0 animate-ping rounded-full bg-info/30" />
-                  )}
                   {done ? <Check className="size-5" strokeWidth={3} /> : <Icon className="relative size-[18px]" />}
                 </span>
                 <div className="leading-tight">
@@ -74,7 +72,7 @@ export function OrderTimeline({ status }: { status: OrderStatus }) {
                   </p>
                   <p
                     className={cn(
-                      "mt-1 inline-block rounded-md px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide",
+                      "mt-1 inline-block rounded-md px-1.5 py-0.5 text-xs font-semibold uppercase tracking-wide",
                       done && "bg-success/10 text-success",
                       current && "bg-info/10 text-info",
                       !done && !current && "text-muted-foreground/70",

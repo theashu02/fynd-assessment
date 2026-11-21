@@ -133,7 +133,7 @@ export function OrderDetailView({ id }: { id: string }) {
         <StatusBadge status={order.status} className="h-7 px-3 text-sm" />
       </div>
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
-        <Card className="min-w-0 border-border bg-card shadow-none">
+        <Card className="min-w-0 border-border bg-card shadow-none [overflow:visible]">
           <CardHeader>
             <CardTitle>Items</CardTitle>
           </CardHeader>
@@ -153,15 +153,15 @@ export function OrderDetailView({ id }: { id: string }) {
                     <TableCell className="font-semibold text-foreground">
                       {item.productName}
                     </TableCell>
-                    <TableCell className="text-right text-muted-foreground">
+                    <TableCell className="text-right text-muted-foreground tabular-nums">
                       {formatCents(item.unitPriceCents)}
                     </TableCell>
                     <TableCell className="text-right">
-                      <span className="inline-flex h-6 min-w-8 items-center justify-center rounded-md bg-muted px-2 text-xs font-bold text-foreground">
+                      <span className="inline-flex h-6 min-w-8 items-center justify-center rounded-md bg-muted px-2 text-xs font-bold text-foreground tabular-nums">
                         {item.quantity}
                       </span>
                     </TableCell>
-                    <TableCell className="text-right font-semibold text-foreground">
+                    <TableCell className="text-right font-semibold text-foreground tabular-nums">
                       {formatCents(item.unitPriceCents * item.quantity)}
                     </TableCell>
                   </TableRow>
@@ -172,7 +172,7 @@ export function OrderDetailView({ id }: { id: string }) {
                   <TableCell colSpan={3} className="font-semibold">
                     Total
                   </TableCell>
-                  <TableCell className="text-right text-base font-bold text-foreground">
+                  <TableCell className="text-right text-base font-bold text-foreground tabular-nums">
                     {formatCents(order.totalCents)}
                   </TableCell>
                 </TableRow>
@@ -183,7 +183,7 @@ export function OrderDetailView({ id }: { id: string }) {
         <div className="flex min-w-0 flex-col gap-6">
           <Card className="shadow-none">
             <CardHeader>
-              <CardTitle className="text-lg">Fulfilment</CardTitle>
+              <CardTitle>Fulfilment</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
               <OrderTimeline status={order.status} />

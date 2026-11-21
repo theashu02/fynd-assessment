@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "cn";
@@ -27,7 +26,7 @@ export const STATUS_OPTIONS: { value: StatusFilter; label: string }[] = [
 
 function CountBadge({ count, active }: { count: number; active?: boolean }) {
   return (
-    <span className={cn("ml-1 inline-flex h-4 min-w-4 items-center justify-center rounded-md px-1 text-[11px] font-semibold", active ? "bg-white/20 text-white" : "bg-secondary text-secondary-foreground")}>
+    <span className={cn("ml-1 inline-flex h-4 min-w-4 items-center justify-center rounded-md px-1 text-xs font-semibold tabular-nums", active ? "bg-white/20 text-white" : "bg-secondary text-secondary-foreground")}>
       {count}
     </span>
   );
@@ -58,16 +57,15 @@ export function OrdersToolbar({
             value={searchInput}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Search by order reference"
-            aria-label="Search by order reference"
-            className="pl-9"
+            className="pl-9 h-10"
           />
         </div>
-        <div className="flex gap-2">
+        <div className="sm:hidden">
           <Select
             value={status}
             onValueChange={(v) => onStatusChange(v as StatusFilter)}
           >
-            <SelectTrigger className="flex-1 sm:hidden" aria-label="Filter by status">
+            <SelectTrigger className="w-full" aria-label="Filter by status">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>
@@ -78,9 +76,6 @@ export function OrdersToolbar({
               ))}
             </SelectContent>
           </Select>
-          <Button asChild className="flex-1 sm:flex-none">
-            <Link href="/orders/new">New order</Link>
-          </Button>
         </div>
       </div>
       <div

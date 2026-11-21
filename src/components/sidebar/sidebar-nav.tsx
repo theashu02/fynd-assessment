@@ -25,8 +25,8 @@ function SidebarNavItem({
           "group relative h-10 w-full rounded-md border px-3 text-[13px] font-medium transition-colors",
           collapsed ? "justify-center px-0" : "justify-start gap-3",
           active
-            ? "border-inkband/20 bg-inkband text-white hover:bg-[#1a2535]! hover:text-white!"
-            : "border-transparent bg-transparent text-[#64748B] hover:border-[#CBD5E1] hover:bg-[#F1F5F9] hover:text-[#0F172A]",
+            ? "border-inkband/20 bg-inkband text-white hover:bg-inkband/90 hover:text-white"
+            : "border-transparent bg-transparent text-muted-foreground hover:border-border hover:bg-sidebar-accent hover:text-foreground",
         )}
       >
         <Link href={route.href} aria-current={active ? "page" : undefined}>
@@ -40,7 +40,7 @@ function SidebarNavItem({
           <span
             className={cn(
               "flex size-4 shrink-0 items-center justify-center transition-colors",
-              active ? "text-accent" : "text-[#64748B] group-hover:text-[#0F172A]",
+              active ? "text-accent" : "text-muted-foreground group-hover:text-foreground",
             )}
           >
             <Icon className="size-4" aria-hidden="true" />

@@ -25,7 +25,7 @@ export function AppSidebar() {
     <TooltipProvider delayDuration={100}>
       <aside
         className={cn(
-          "hidden h-screen shrink-0 flex-col overflow-visible bg-background transition-[width] duration-300 ease-in-out md:flex border-r",
+          "hidden h-screen shrink-0 flex-col overflow-visible bg-background transition-[width] duration-150 ease-in-out md:flex border-r",
           isCollapsed ? "md:w-14" : "md:w-48",
         )}
       >
