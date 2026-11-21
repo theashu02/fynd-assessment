@@ -33,21 +33,13 @@ function StatCard({
   label,
   value,
   icon: Icon,
-  iconBg,
   iconColor,
 }: StatCardProps) {
   return (
-    <div className="flex items-center gap-2.5 px-5 py-3">
-      <span
-        className="flex size-7 shrink-0 items-center justify-center rounded-sm"
-        style={{ backgroundColor: iconBg }}
-      >
-        <Icon className="size-3.5" style={{ color: iconColor }} aria-hidden />
-      </span>
-      <div className="min-w-0">
-        <p className="text-[11px] font-medium leading-none text-muted-foreground mb-0.5">{label}</p>
-        <p className="text-base font-bold leading-none text-foreground">{value}</p>
-      </div>
+    <div className="flex items-center gap-2 px-3 py-3 sm:px-4">
+      <Icon className="size-5 shrink-0 sm:size-6" style={{ color: iconColor }} aria-hidden />
+      <span className="text-lg font-bold text-foreground sm:text-xl">{value}</span>
+      <span className="truncate text-xs text-muted-foreground sm:text-sm">{label}</span>
     </div>
   );
 }
@@ -89,9 +81,9 @@ export function ProductsView() {
           title="Catalogue"
           subtitle="Live stock levels. Auto-refreshes every 15 seconds."
         />
-        <div className="mb-4 flex flex-wrap items-center divide-x divide-border bg-card">
+        <div className="mb-4 grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-4">
           {Array.from({ length: 3 }).map((_, i) => (
-            <Skeleton key={i} className="h-14 w-40 border-0" />
+            <Skeleton key={i} className="h-[60px] w-full sm:h-[72px]" />
           ))}
         </div>
         <TableSkeleton rows={8} />
@@ -138,7 +130,7 @@ export function ProductsView() {
         }
       />
 
-      <div className="mb-4 flex flex-wrap items-center divide-x divide-border border-0 bg-card outline-none">
+      <div className="mb-1 grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-4">
         <StatCard
           label="Total Products"
           value={totalProducts}

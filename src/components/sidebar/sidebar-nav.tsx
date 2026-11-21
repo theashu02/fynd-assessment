@@ -22,7 +22,7 @@ function SidebarNavItem({
         asChild
         variant="ghost"
         className={cn(
-          "group relative h-10 w-full rounded-none border px-3 text-[13px] font-medium transition-colors active:scale-100 active:translate-y-0",
+          "group relative h-10 w-full rounded-none border px-3 text-[13px] font-medium transition-colors",
           collapsed ? "justify-center px-0" : "justify-start gap-3",
           active
             ? "border-inkband/20 bg-inkband text-white hover:bg-[#1a2535]! hover:text-white!"

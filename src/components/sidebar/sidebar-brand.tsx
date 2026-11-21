@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { ChevronsLeft, ChevronsRight, Package2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,9 +9,10 @@ import { SidebarTip } from "./sidebar-tip";
 type SidebarBrandProps = {
   collapsed: boolean;
   onToggle: () => void;
+  action?: ReactNode;
 };
 
-export function SidebarBrand({ collapsed, onToggle }: SidebarBrandProps) {
+export function SidebarBrand({ collapsed, onToggle, action }: SidebarBrandProps) {
   if (collapsed) {
     return (
       <div className="flex shrink-0 flex-col items-center gap-2 px-2 pt-3 pb-1">
@@ -55,15 +57,17 @@ export function SidebarBrand({ collapsed, onToggle }: SidebarBrandProps) {
           </span>
         </span>
       </Link>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={onToggle}
-        aria-label="Collapse sidebar"
-        className="size-7 shrink-0 border border-transparent text-muted-foreground hover:border-border hover:bg-card hover:text-foreground"
-      >
-        <ChevronsLeft className="size-4" />
-      </Button>
+      {action ?? (
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onToggle}
+          aria-label="Collapse sidebar"
+          className="size-7 shrink-0 border border-transparent text-muted-foreground hover:border-border hover:bg-card hover:text-foreground"
+        >
+          <ChevronsLeft className="size-4" />
+        </Button>
+      )}
     </div>
   );
 }
