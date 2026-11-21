@@ -194,9 +194,9 @@ export default function NewOrderPage() {
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search products by name or SKU"
+                placeholder="Search products by name"
                 aria-label="Search catalogue"
-                className="h-10 bg-card pl-9 text-sm"
+                className="h-10 bg-card pl-9 text-[15px]!"
               />
             </div>
             <div className="mb-4 flex flex-wrap gap-2" role="tablist" aria-label="Stock filter">

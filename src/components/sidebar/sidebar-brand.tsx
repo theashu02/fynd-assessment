@@ -50,10 +50,7 @@ export function SidebarBrand({ collapsed, onToggle, action }: SidebarBrandProps)
           />
         </span>
         <span className="flex min-w-0 flex-col leading-none">
-          <span className="truncate text-sm font-bold tracking-widest text-foreground uppercase">
-            OrderConsole
-          </span>
-          <span className="mt-0.5 truncate text-[10px] font-semibold tracking-[0.2em] text-muted-foreground uppercase">
+          <span className="mt-0.5 truncate text-[12px] font-semibold tracking-[0.2em] text-muted-foreground uppercase">
             OrderFlow
           </span>
         </span>

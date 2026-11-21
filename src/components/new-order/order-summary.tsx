@@ -71,12 +71,10 @@ export function OrderSummary({
 
   if (lines.length === 0) {
     return (
-      <div className="rounded-md border border-border bg-card p-6 shadow-sm">
+      <div className="rounded-xl border bg-card p-4">
         <div className="flex flex-col items-center justify-center px-2 py-12 text-center">
-          <div className="mb-5 flex size-20 items-center justify-center rounded-full bg-muted text-muted-foreground">
-            <ShoppingBag className="size-9" aria-hidden />
-          </div>
-          <h3 className="text-xl font-bold tracking-tight text-foreground">
+          <ShoppingBag className="mb-5 size-16 text-muted" aria-hidden />
+          <h3 className="text-xl font-medium tracking-tight text-foreground">
             Your cart is empty
           </h3>
           <p className="mt-2 max-w-64 text-sm leading-relaxed text-muted-foreground">
