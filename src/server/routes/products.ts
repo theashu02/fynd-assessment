@@ -8,6 +8,7 @@ const productDto = t.Object({
   sku: t.String(),
   name: t.String(),
   description: t.String(),
+  imageUrl: t.String(),
   priceCents: t.Integer(),
   stock: t.Integer(),
 });
@@ -21,6 +22,7 @@ export const productRoutes = new Elysia({ prefix: "/products" }).get(
         sku: products.sku,
         name: products.name,
         description: products.description,
+        imageUrl: products.imageUrl,
         priceCents: products.priceCents,
         stock: products.stock,
       })

@@ -15,23 +15,24 @@ type SidebarBrandProps = {
 export function SidebarBrand({ collapsed, onToggle, action }: SidebarBrandProps) {
   if (collapsed) {
     return (
-      <div className="flex shrink-0 flex-col items-center gap-2 px-2 pt-3 pb-1">
-        <Link
-          href="/orders/new"
-          aria-label="OrderConsole home"
-          className="flex size-9 items-center justify-center bg-inkband text-white transition-colors hover:bg-inkband/90"
-        >
-          <Package2 className="size-4" aria-hidden="true" />
-        </Link>
+      <div className="flex shrink-0 justify-center px-2 pt-3 pb-1">
         <SidebarTip label="Expand" collapsed>
           <Button
             variant="ghost"
             size="icon"
             onClick={onToggle}
             aria-label="Expand sidebar"
-            className="size-7 border border-border bg-card text-foreground hover:border-inkband hover:bg-inkband hover:text-white"
+            className="group relative size-9 shrink-0 bg-inkband text-white transition-colors hover:bg-inkband/90"
           >
-            <ChevronsRight className="size-4" />
+            <Package2
+              className="size-4 transition-all duration-150 group-hover:scale-75 group-hover:opacity-0 group-focus-visible:scale-75 group-focus-visible:opacity-0"
+              aria-hidden="true"
+            />
+            
+            <ChevronsRight
+              className="absolute size-4 scale-75 opacity-0 transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100"
+              aria-hidden="true"
+            />
           </Button>
         </SidebarTip>
       </div>
@@ -53,7 +54,7 @@ export function SidebarBrand({ collapsed, onToggle, action }: SidebarBrandProps)
             OrderConsole
           </span>
           <span className="mt-0.5 truncate text-[10px] font-semibold tracking-[0.2em] text-muted-foreground uppercase">
-            Phone orders
+            OrderFlow
           </span>
         </span>
       </Link>

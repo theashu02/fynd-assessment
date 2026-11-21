@@ -1,4 +1,6 @@
-﻿import { Minus, Package, Plus, Star } from "lucide-react";
+import Image from "next/image";
+import { Minus, Package, Plus, Star } from "lucide-react";
+import { cn } from "cn";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatCents } from "@/lib/format";
@@ -34,30 +36,45 @@ export function ProductCard({
   onDecrement: () => void;
 }) {
   const out = product.stock <= 0;
-  const low = product.stock >= 1 && product.stock <= 5;
   const atMax = qty >= product.stock;
   return (
     <Card className="cv-auto border-border bg-card shadow-none transition-colors hover:border-primary">
-      <div className="relative flex h-28 items-center justify-center border-b border-border bg-mist">
-        <Package className="size-10 text-muted-foreground" aria-hidden />
-        <span className="absolute left-2 top-2">
+      <div className="relative aspect-[16/10] border-b border-border bg-mist">
+        {product.imageUrl ? (
+          <Image
+            src={product.imageUrl}
+            alt={product.name}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+            className={cn("object-cover", out && "opacity-70 grayscale")}
+          />
+        ) : (
+          <span className="flex h-full items-center justify-center">
+            <Package className="size-10 text-muted-foreground" aria-hidden />
+          </span>
+        )}
+        <span className="absolute left-3 top-3">
           <StockBadge stock={product.stock} />
         </span>
-        {low ? (
-          <span className="absolute right-2 top-2 bg-accent px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
-            Low stock
+        {qty > 0 ? (
+          <span className="absolute right-3 top-3 bg-inkband px-2 py-1 text-[11px] font-bold text-white">
+            {qty} in cart
           </span>
         ) : null}
       </div>
       <CardContent className="flex flex-col gap-2 p-4">
-        <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">{product.sku}</p>
+        <div className="flex items-start justify-between gap-2">
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+            {product.sku}
+          </p>
+          <RatingRow />
+        </div>
         <p className="truncate text-sm font-bold text-foreground">{product.name}</p>
-        <RatingRow />
         <p className="line-clamp-2 min-h-8 text-xs leading-relaxed text-muted-foreground">
           {product.description}
         </p>
         <div className="mt-1 flex items-baseline justify-between gap-2">
-          <p className="text-lg font-bold tracking-tight text-foreground">
+          <p className="text-xl font-bold tracking-tight text-foreground">
             {formatCents(product.priceCents)}
           </p>
           <p className="text-[11px] font-medium text-muted-foreground">
@@ -109,4 +126,3 @@ export function ProductCard({
     </Card>
   );
 }
-
