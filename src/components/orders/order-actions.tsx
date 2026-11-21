@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,8 +12,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import type { OrderStatus } from "@/lib/orders";
+  Button,
+} from "@/components/ui";
+import type { OrderStatus } from "@/lib";
 
 function Spinner() {
   return <Loader2 className="size-4 animate-spin" aria-hidden />;

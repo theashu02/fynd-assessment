@@ -1,18 +1,18 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "cn";
-import { Input } from "@/components/ui/input";
 import {
+  Button,
+  Input,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui";
+import { cn } from "cn";
 
-import type { OrderStatus } from "@/lib/orders";
+import type { OrderStatus } from "@/lib";
 
 export type StatusFilter = "ALL" | OrderStatus;
 

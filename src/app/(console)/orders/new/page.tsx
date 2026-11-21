@@ -2,26 +2,33 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "@/components/ui/toast-manager";
+import { toast } from "@/components/ui";
 import { PackageSearch, RotateCcw, Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import {
+  Button,
+  Card,
+  CardContent,
+  Input,
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { Skeleton } from "@/components/ui/skeleton";
-import { PageHeader } from "@/components/page-header";
-import { useProducts } from "@/lib/products";
-import { formatCents } from "@/lib/format";
-import { cartCount, useCartStore } from "@/stores/cart-store";
-import { usePlaceOrder, type PlaceOrderError } from "@/lib/use-place-order";
-import { OrderSummary, type FailedLine } from "@/components/new-order/order-summary";
-import { ProductCard } from "@/components/new-order/product-card";
+  Skeleton,
+} from "@/components/ui";
+import { EmptyState, PageHeader } from "@/components/common";
+import {
+  formatCents,
+  usePlaceOrder,
+  useProducts,
+  type PlaceOrderError,
+} from "@/lib";
+import { cartCount, useCartStore } from "@/stores";
+import {
+  OrderSummary,
+  ProductCard,
+  type FailedLine,
+} from "@/components/new-order";
 import { cn } from "cn";
 
 const FILTERS = [
@@ -164,7 +171,7 @@ export default function NewOrderPage() {
       {productsQuery.isLoading ? (
         <div className={PRODUCT_GRID}>
           {Array.from({ length: 4 }).map((_, i) => (
-            <Skeleton key={i} className="h-[480px] w-full rounded-2xl" />
+            <Skeleton key={i} className="h-120 w-full rounded-2xl" />
           ))}
         </div>
       ) : productsQuery.isError ? (
@@ -208,26 +215,22 @@ export default function NewOrderPage() {
               ))}
             </div>
             {filtered.length === 0 ? (
-              <Card className="border-border bg-card shadow-none">
-                <CardContent className="flex flex-col items-center gap-3 px-4 py-10 text-center">
-                  <span className="flex size-14 items-center justify-center rounded-md bg-muted">
-                    <PackageSearch className="size-6 text-muted-foreground" aria-hidden />
-                  </span>
-                  <p className="text-sm font-semibold text-foreground">
-                    No products found
-                  </p>
-                  <p className="max-w-55 text-xs text-muted-foreground">
-                    {query.trim()
-                      ? "No products match your search."
-                      : "No products in this view yet."}
-                  </p>
-                  {query.trim() || filter !== "all" ? (
+              <EmptyState
+                icon={PackageSearch}
+                title="No products found"
+                description={
+                  query.trim()
+                    ? "No products match your search."
+                    : "No products in this view yet."
+                }
+                action={
+                  query.trim() || filter !== "all" ? (
                     <Button variant="outline" onClick={clearSearchAndFilters}>
                       Clear search &amp; filters
                     </Button>
-                  ) : null}
-                </CardContent>
-              </Card>
+                  ) : undefined
+                }
+              />
             ) : (
               <div className={PRODUCT_GRID}>
                 {filtered.map((p) => (

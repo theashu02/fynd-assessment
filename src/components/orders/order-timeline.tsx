@@ -1,7 +1,6 @@
 import { Check, Package, ShoppingBag, Truck, XCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-export type OrderStatus = "PLACED" | "PACKED" | "SHIPPED" | "CANCELLED";
+import { cn } from "cn";
+import type { OrderStatus } from "@/lib";
 
 const STEPS = [
   { key: "PLACED", label: "Placed", icon: ShoppingBag },
@@ -64,7 +63,7 @@ export function OrderTimeline({ status }: { status: OrderStatus }) {
                   )}
                   aria-hidden
                 >
-                  {done ? <Check className="size-5" strokeWidth={3} /> : <Icon className="relative size-[18px]" />}
+                  {done ? <Check className="size-5" strokeWidth={3} /> : <Icon className="relative size-4.5" />}
                 </span>
                 <div className="leading-tight">
                   <p className={cn("text-sm font-medium", done || current ? "text-foreground" : "text-muted-foreground")}>

@@ -9,9 +9,8 @@ import {
   ShoppingBag,
   Trash2,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { formatCents } from "@/lib/format";
-import type { ProductDto } from "@/lib/products";
+import { Button } from "@/components/ui";
+import { formatCents, type ProductDto } from "@/lib";
 
 type Product = ProductDto[number];
 
@@ -130,7 +129,7 @@ export function OrderSummary({
       ) : null}
 
       {/* Line Items */}
-      <ul className="max-h-[420px] divide-y divide-border overflow-y-auto px-5">
+      <ul className="max-h-105 divide-y divide-border overflow-y-auto px-5">
         {lines.map(({ product, qty }) => {
           const failed = failedById.get(product.id);
           const atMaxStock = qty >= product.stock;

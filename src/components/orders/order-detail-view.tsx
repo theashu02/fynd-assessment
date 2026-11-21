@@ -2,11 +2,14 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { toast } from "@/components/ui/toast-manager";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { toast } from "@/components/ui";
 import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Separator,
   Table,
   TableBody,
   TableCell,
@@ -14,17 +17,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { DetailSkeleton } from "@/components/loading-skeletons";
-import { MobileActionBar } from "@/components/mobile-action-bar";
-import { PageHeader } from "@/components/page-header";
-import { formatCents } from "@/lib/format";
+} from "@/components/ui";
 import {
+  DetailSkeleton,
+  MobileActionBar,
+  PageHeader,
+} from "@/components/common";
+import {
+  formatCents,
   useOrder,
   useUpdateOrderStatus,
   type OrderApiError,
   type OrderStatus,
-} from "@/lib/orders";
+} from "@/lib";
 import { OrderActions } from "./order-actions";
 import { OrderTimeline } from "./order-timeline";
 import { StatusBadge } from "./status-badge";
@@ -133,7 +138,7 @@ export function OrderDetailView({ id }: { id: string }) {
         <StatusBadge status={order.status} className="h-7 px-3 text-sm" />
       </div>
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
-        <Card className="min-w-0 border-border bg-card shadow-none [overflow:visible]">
+        <Card className="min-w-0 border-border bg-card shadow-none overflow-visible">
           <CardHeader>
             <CardTitle>Items</CardTitle>
           </CardHeader>

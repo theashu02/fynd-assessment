@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { cn } from "cn";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { SIDEBAR_ROUTES, isRouteActive, type SidebarRoute } from "./sidebar-data";
 import { SidebarTip } from "./sidebar-tip";
 

@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ChevronsLeft, ChevronsRight, Package2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { SidebarTip } from "./sidebar-tip";
 
 type SidebarBrandProps = {

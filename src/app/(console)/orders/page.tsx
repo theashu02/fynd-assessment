@@ -1,4 +1,4 @@
-import { OrdersView } from "@/components/orders/orders-view";
+import { OrdersView } from "@/components/orders";
 
 export default function OrdersPage() {
   return <OrdersView />;

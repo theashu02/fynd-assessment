@@ -1,7 +1,7 @@
 ﻿import { Suspense } from "react";
 import Link from "next/link";
 import { Package2, Truck } from "lucide-react";
-import { AppSidebar, MobileSidebar } from "./sidebar/app-sidebar";
+import { AppSidebar, MobileSidebar } from "./sidebar";
 
 function PromoBand() {
   return (

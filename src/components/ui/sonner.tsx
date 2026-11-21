@@ -4,7 +4,7 @@ import * as React from "react";
 import { Toast as ToastPrimitive } from "@base-ui/react/toast";
 import { cn } from "cn";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "./button";
 import {
   XIcon,
   CircleCheckIcon,
@@ -29,7 +29,7 @@ function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
     <ToastPrimitive.Viewport
       data-slot="toast-viewport"
       className={cn(
-        "pointer-events-none fixed inset-x-0 bottom-24 z-[1000] mx-auto flex w-full max-w-md flex-col items-center gap-2 px-4 outline-none lg:bottom-6",
+        "pointer-events-none fixed inset-x-0 top-6 z-[1000] mx-auto flex w-full max-w-md flex-col items-center gap-2 px-4 outline-none",
         className,
       )}
       {...props}
@@ -42,7 +42,7 @@ function Toast({ className, ...props }: ToastPrimitive.Root.Props) {
     <ToastPrimitive.Root
       data-slot="toast"
       className={cn(
-        "group/toast pointer-events-auto absolute inset-x-0 bottom-0 z-[calc(1000-var(--toast-index))] mx-auto w-fit max-w-full origin-bottom rounded-md bg-inkband text-white shadow-sm ring-1 ring-white/10 will-change-transform outline-none select-none",
+        "group/toast pointer-events-auto absolute inset-x-0 top-0 z-[calc(1000-var(--toast-index))] mx-auto w-fit max-w-full origin-top rounded-md bg-inkband text-white shadow-sm ring-1 ring-white/10 will-change-transform outline-none select-none",
         "[--gap:0.5rem] [--height:var(--toast-frontmost-height,var(--toast-height))] [--offset-y:calc(var(--toast-offset-y)+calc(var(--toast-index)*var(--gap))+var(--toast-swipe-movement-y))] [--peek:0.5rem] [--scale:calc(max(0,1-(var(--toast-index)*0.08)))] [--shrink:calc(1-var(--scale))]",
         "h-(--height) transform-[translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)+(var(--toast-index)*var(--peek))+(var(--shrink)*var(--height))))_scale(var(--scale))] [transition:transform_400ms_cubic-bezier(0.22,1,0.36,1),opacity_400ms,height_150ms]",
         "after:absolute after:inset-x-0 after:top-full after:h-[calc(var(--gap)+1px)] after:w-full after:content-['']",

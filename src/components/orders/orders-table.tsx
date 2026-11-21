@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { ClipboardList } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button, Card, CardContent } from "@/components/ui";
 import {
   Table,
   TableBody,
@@ -11,10 +10,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { TableSkeleton } from "@/components/loading-skeletons";
-import { formatCents } from "@/lib/format";
-import type { OrderSummaryRow } from "@/lib/orders";
+} from "@/components/ui";
+import { EmptyState, TableSkeleton } from "@/components/common";
+import { formatCents, type OrderSummaryRow } from "@/lib";
 import { StatusBadge } from "./status-badge";
 
 function formatDate(value: string | Date): string {
@@ -82,18 +80,16 @@ export function OrdersTable({
 
   if (rows.length === 0) {
     return (
-      <Card className="border-border bg-card shadow-none">
-        <CardContent className="flex flex-col items-center gap-3 px-4 py-10 text-center">
-          <span className="flex size-14 items-center justify-center rounded-md bg-muted">
-            <ClipboardList className="size-6 text-muted-foreground" aria-hidden />
-          </span>
-          <p className="text-sm font-semibold text-foreground">No orders found</p>
-          <p className="max-w-55 text-xs text-muted-foreground">
-            {hasFilters
-              ? "Try a different reference or status filter."
-              : "Create your first order from New Order."}
-          </p>
-          {hasFilters ? (
+      <EmptyState
+        icon={ClipboardList}
+        title="No orders found"
+        description={
+          hasFilters
+            ? "Try a different reference or status filter."
+            : "Create your first order from New Order."
+        }
+        action={
+          hasFilters ? (
             <Button variant="outline" onClick={onClearFilters}>
               Clear filters
             </Button>
@@ -101,9 +97,9 @@ export function OrdersTable({
             <Button asChild>
               <Link href="/orders/new">New order</Link>
             </Button>
-          )}
-        </CardContent>
-      </Card>
+          )
+        }
+      />
     );
   }
 
