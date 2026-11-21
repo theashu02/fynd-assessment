@@ -34,62 +34,62 @@ export function OrderTimeline({ status }: { status: OrderStatus }) {
 
   return (
     <div className="rounded-md border border-border bg-card p-5 shadow-sm sm:p-6">
-      <ol className="flex gap-3 sm:gap-4">
+      <ol className="flex flex-col">
         {STEPS.map((step, index) => {
           const done = index < currentIndex;
           const current = index === currentIndex;
+          const last = index === STEPS.length - 1;
           const Icon = step.icon;
           return (
             <li
               key={step.key}
-              className="min-w-0 flex-1"
               aria-current={current ? "step" : undefined}
+              className={cn("relative flex gap-3", !last && "pb-6")}
             >
-              <div
+              {!last && (
+                <span
+                  aria-hidden
+                  className={cn(
+                    "absolute bottom-0 left-4 top-8 w-0.5 -translate-x-1/2 rounded-full",
+                    done ? "bg-success" : "bg-muted",
+                  )}
+                />
+              )}
+              <span
                 className={cn(
-                  "h-1.5 rounded-full",
-                  done && "bg-success",
-                  current && "bg-info",
-                  !done && !current && "bg-muted",
+                  "flex size-8 shrink-0 items-center justify-center rounded-full transition-colors duration-150",
+                  done && "bg-success text-success-foreground",
+                  current &&
+                    "bg-info text-info-foreground ring-4 ring-info/15 motion-safe:animate-pulse",
+                  !done && !current && "border border-border bg-muted text-muted-foreground",
                 )}
                 aria-hidden
-              />
-              <div className="mt-2.5 flex items-center gap-2">
-                <span
+              >
+                {done ? (
+                  <Check className="size-4" strokeWidth={3} />
+                ) : (
+                  <Icon className="size-4" />
+                )}
+              </span>
+              <div className="flex min-w-0 flex-1 items-center justify-between gap-3 pt-1">
+                <p
                   className={cn(
-                    "flex size-8 shrink-0 items-center justify-center rounded-full transition-colors duration-150",
-                    done && "bg-success text-success-foreground",
-                    current && "bg-info text-info-foreground ring-4 ring-info/15",
+                    "text-sm font-semibold whitespace-nowrap",
+                    done || current ? "text-foreground" : "text-muted-foreground",
+                  )}
+                >
+                  {step.label}
+                </p>
+                <p
+                  className={cn(
+                    "rounded-md px-2 py-0.5 text-xs font-semibold whitespace-nowrap",
+                    done && "bg-success/10 text-success",
+                    current && "bg-info/10 text-info",
                     !done && !current && "bg-muted text-muted-foreground",
                   )}
-                  aria-hidden
                 >
-                  {done ? (
-                    <Check className="size-4" strokeWidth={3} />
-                  ) : (
-                    <Icon className="size-4" />
-                  )}
-                </span>
-                <div className="min-w-0 leading-tight">
-                  <p
-                    className={cn(
-                      "truncate text-sm font-semibold",
-                      done || current ? "text-foreground" : "text-muted-foreground",
-                    )}
-                  >
-                    {step.label}
-                  </p>
-                  <p
-                    className={cn(
-                      "mt-0.5 text-xs font-medium",
-                      done && "text-success",
-                      current && "text-info",
-                      !done && !current && "text-muted-foreground/70",
-                    )}
-                  >
-                    {done ? "Done" : current ? "In progress" : "Pending"}
-                  </p>
-                </div>
+                  {done ? "Done" : current ? "In progress" : "Pending"}
+                </p>
               </div>
             </li>
           );

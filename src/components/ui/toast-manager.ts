@@ -3,7 +3,9 @@
 import * as React from "react";
 import { Toast as ToastPrimitive } from "@base-ui/react/toast";
 
-export const TOAST_DEFAULT_TIMEOUT_MS = 3000;
+export const TOAST_DEFAULT_TIMEOUT_MS = 1500;
+export const TOAST_SUCCESS_TIMEOUT_MS = 1500;
+export const TOAST_ERROR_TIMEOUT_MS = 1500;
 export const TOAST_DEFAULT_LIMIT = 3;
 
 const baseToastManager = ToastPrimitive.createToastManager();
@@ -23,11 +25,23 @@ export const toast: Omit<typeof baseToastManager, "add"> & {
   add: (options) => baseToastManager.add(withTimeout(options)),
   success: (description, options) =>
     baseToastManager.add(
-      withTimeout({ type: "success", title: "Success", description, ...options }),
+      withTimeout({
+        timeout: TOAST_SUCCESS_TIMEOUT_MS,
+        type: "success",
+        title: "Success",
+        description,
+        ...options,
+      }),
     ),
   error: (description, options) =>
     baseToastManager.add(
-      withTimeout({ type: "error", title: "Error", description, ...options }),
+      withTimeout({
+        timeout: TOAST_ERROR_TIMEOUT_MS,
+        type: "error",
+        title: "Error",
+        description,
+        ...options,
+      }),
     ),
 };
 
