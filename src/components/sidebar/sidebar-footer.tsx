@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import Link from "next/link";
-import { Headset, Package } from "lucide-react";
+import { Headset } from "lucide-react";
 import { cn } from "cn";
 import { SidebarTip } from "./sidebar-tip";
 
@@ -49,10 +49,10 @@ export function SidebarFooter({ collapsed }: SidebarFooterProps) {
             href="https://github.com/theashu02"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 flex h-9 items-center justify-center gap-2 overflow-hidden rounded-md border border-inkband bg-inkband px-3 text-xs font-bold tracking-wide whitespace-nowrap text-white uppercase transition-colors hover:border-inkband/90 hover:bg-inkband/90 hover:text-white"
+            className="mt-2 flex h-9 items-center justify-center gap-2 overflow-hidden rounded-md border border-inkband bg-inkband px-3 text-sm font-medium tracking-wide whitespace-nowrap text-white transition-colors hover:border-inkband/90 hover:bg-inkband/90 hover:text-white"
           >
-            <Package className="size-3.5 shrink-0" aria-hidden="true" />
-            <span className="truncate">live stock</span>
+            <Headset className="size-3.5 shrink-0" aria-hidden="true" />
+            <span className="truncate">Contact</span>
           </Link>
         </div>
       )}

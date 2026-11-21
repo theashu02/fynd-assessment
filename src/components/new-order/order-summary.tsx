@@ -28,17 +28,17 @@ export type FailedLine = {
 
 function LineThumbnail({ product }: { product: Product }) {
   return (
-    <span className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-md bg-mist">
+    <span className="relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-md bg-mist">
       {product.imageUrl ? (
         <Image
           src={product.imageUrl}
           alt=""
           fill
-          sizes="40px"
+          sizes="64px"
           className="object-cover"
         />
       ) : (
-        <Package className="size-4 text-muted-foreground" aria-hidden />
+        <Package className="size-6 text-muted-foreground" aria-hidden />
       )}
     </span>
   );
@@ -72,14 +72,14 @@ export function OrderSummary({
   if (lines.length === 0) {
     return (
       <div className="rounded-md border border-border bg-card p-6 shadow-sm">
-        <div className="flex flex-col items-center justify-center py-10 text-center">
-          <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
-            <ShoppingBag className="size-6" aria-hidden />
+        <div className="flex flex-col items-center justify-center px-2 py-12 text-center">
+          <div className="mb-5 flex size-20 items-center justify-center rounded-full bg-muted text-muted-foreground">
+            <ShoppingBag className="size-9" aria-hidden />
           </div>
-          <h3 className="text-base font-semibold tracking-tight text-foreground">
+          <h3 className="text-xl font-bold tracking-tight text-foreground">
             Your cart is empty
           </h3>
-          <p className="mt-1.5 max-w-60 text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-2 max-w-64 text-sm leading-relaxed text-muted-foreground">
             Add products from the catalogue to get started. Inventory is
             verified automatically at checkout.
           </p>
@@ -94,24 +94,24 @@ export function OrderSummary({
       className="flex flex-col overflow-hidden rounded-md border border-border bg-card shadow-sm"
     >
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-border px-5 py-4">
-        <h2 className="text-base font-semibold tracking-tight text-foreground">
+      <div className="flex items-center justify-between px-6 py-5">
+        <h2 className="text-lg font-bold tracking-tight text-foreground">
           Order summary
         </h2>
-        <span className="inline-flex items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground tabular-nums">
+        <span className="inline-flex items-center rounded-full bg-secondary px-3 py-1 text-sm font-semibold text-secondary-foreground tabular-nums">
           {count} {count === 1 ? "item" : "items"}
         </span>
       </div>
 
       {/* Stock Error Banner */}
       {stockError ? (
-        <div className="px-5 pt-4">
+        <div className="px-6 pb-1">
           <div
             role="alert"
-            className="flex gap-2.5 rounded-md border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive"
+            className="flex gap-3 rounded-md border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive"
           >
-            <AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden />
-            <div className="space-y-1">
+            <AlertCircle className="mt-0.5 size-5 shrink-0" aria-hidden />
+            <div className="space-y-1.5">
               <p className="font-semibold leading-snug">{stockError}</p>
               {failedLines.length > 0 ? (
                 <ul className="list-disc space-y-0.5 pl-4 text-destructive/90">
@@ -129,7 +129,7 @@ export function OrderSummary({
       ) : null}
 
       {/* Line Items */}
-      <ul className="max-h-105 divide-y divide-border overflow-y-auto px-5">
+      <ul className="max-h-110 divide-y divide-border overflow-y-auto px-6">
         {lines.map(({ product, qty }) => {
           const failed = failedById.get(product.id);
           const atMaxStock = qty >= product.stock;
@@ -137,15 +137,15 @@ export function OrderSummary({
           return (
             <li
               key={product.id}
-              className="group flex items-start justify-between gap-3 py-4"
+              className="group flex items-start justify-between gap-4 py-5"
             >
               <LineThumbnail product={product} />
-              <div className="min-w-0 flex-1 space-y-2">
+              <div className="min-w-0 flex-1 space-y-2.5">
                 <div>
-                  <p className="truncate text-sm font-medium leading-tight text-foreground">
+                  <p className="truncate text-base font-semibold leading-snug text-foreground">
                     {product.name}
                   </p>
-                  <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground tabular-nums">
+                  <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm text-muted-foreground tabular-nums">
                     <span>{formatCents(product.priceCents)} each</span>
                     {failed ? (
                       <span className="font-medium text-destructive">
@@ -166,11 +166,11 @@ export function OrderSummary({
                     onClick={() => onDecrement(product.id)}
                     disabled={isPending}
                     aria-label={`Decrease ${product.name}`}
-                    className="flex size-7 items-center justify-center rounded-l-md text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-40"
+                    className="flex size-8 items-center justify-center rounded-l-md text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-40"
                   >
-                    <Minus className="size-3" aria-hidden />
+                    <Minus className="size-3.5" aria-hidden />
                   </button>
-                  <span className="min-w-8 border-x border-input px-2 text-center text-xs font-medium text-foreground tabular-nums">
+                  <span className="min-w-9 border-x border-input px-2 text-center text-sm font-semibold text-foreground tabular-nums">
                     {qty}
                   </span>
                   <button
@@ -178,16 +178,16 @@ export function OrderSummary({
                     onClick={() => onIncrement(product)}
                     disabled={isPending || atMaxStock}
                     aria-label={`Increase ${product.name}`}
-                    className="flex size-7 items-center justify-center rounded-r-md text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-40"
+                    className="flex size-8 items-center justify-center rounded-r-md text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-40"
                   >
-                    <Plus className="size-3" aria-hidden />
+                    <Plus className="size-3.5" aria-hidden />
                   </button>
                 </div>
               </div>
 
               {/* Line Total & Remove */}
-              <div className="flex shrink-0 flex-col items-end justify-between gap-2">
-                <span className="text-sm font-semibold text-foreground tabular-nums">
+              <div className="flex shrink-0 flex-col items-end justify-between gap-2.5">
+                <span className="text-base font-bold text-foreground tabular-nums">
                   {formatCents(product.priceCents * qty)}
                 </span>
                 <Button
@@ -198,7 +198,7 @@ export function OrderSummary({
                   aria-label={`Remove ${product.name}`}
                   className="text-muted-foreground transition-colors duration-150 hover:bg-destructive/10 hover:text-destructive"
                 >
-                  <Trash2 className="size-3.5" aria-hidden />
+                  <Trash2 className="size-4" aria-hidden />
                 </Button>
               </div>
             </li>
@@ -207,13 +207,13 @@ export function OrderSummary({
       </ul>
 
       {/* Totals & CTA Footer */}
-      <div className="space-y-4 border-t border-border bg-muted/30 px-5 py-4">
-        <div className="space-y-2 text-sm">
+      <div className="space-y-5 border-t border-border bg-muted/30 px-6 py-5">
+        <div className="space-y-2.5 text-base">
           <div className="flex items-center justify-between text-muted-foreground">
             <span>Subtotal</span>
             <span className="tabular-nums">{formatCents(totalCents)}</span>
           </div>
-          <div className="flex items-center justify-between border-t border-border pt-2.5 text-base font-semibold text-foreground">
+          <div className="flex items-center justify-between border-t border-border pt-3 text-xl font-bold text-foreground">
             <span>Total</span>
             <span className="tabular-nums">{formatCents(totalCents)}</span>
           </div>
@@ -222,11 +222,11 @@ export function OrderSummary({
         <Button
           onClick={onPlaceOrder}
           disabled={isPending || lines.length === 0}
-          className="h-10 w-full gap-2 font-medium shadow-xs"
+          className="h-12 w-full gap-2 text-base font-semibold shadow-xs"
         >
           {isPending ? (
             <>
-              <Loader2 className="size-4 animate-spin" aria-hidden />
+              <Loader2 className="size-5 animate-spin" aria-hidden />
               Placing order...
             </>
           ) : (
@@ -235,7 +235,7 @@ export function OrderSummary({
         </Button>
 
         <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
-          <Lock className="size-3" aria-hidden />
+          <Lock className="size-3.5" aria-hidden />
           Inventory is verified live when you place your order
         </p>
       </div>
