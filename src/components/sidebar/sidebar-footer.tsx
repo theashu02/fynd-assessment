@@ -23,7 +23,9 @@ export function SidebarFooter({ collapsed }: SidebarFooterProps) {
               <Headset className="size-4" aria-hidden="true" />
             </Link>
           </SidebarTip>
-          <p className="hidden text-[10px] text-muted-foreground md:block">v1</p>
+          <p className="hidden text-[10px] text-muted-foreground md:block">
+            v1
+          </p>
         </div>
       ) : (
         <div className="rounded-md border border-border bg-card p-2.5">
@@ -33,7 +35,10 @@ export function SidebarFooter({ collapsed }: SidebarFooterProps) {
             </span>
             Store support
             <span className="ml-auto flex items-center gap-1 text-[10px] font-semibold text-status-packed">
-              <span className="size-1.5 animate-pulse rounded-full bg-status-packed" aria-hidden="true" />
+              <span
+                className="size-1.5 animate-pulse rounded-full bg-status-packed"
+                aria-hidden="true"
+              />
               LIVE
             </span>
           </p>
@@ -41,7 +46,9 @@ export function SidebarFooter({ collapsed }: SidebarFooterProps) {
             Taking a phone order? Check stock first, then build the cart.
           </p>
           <Link
-            href="/products"
+            href="https://github.com/theashu02"
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-2 flex h-9 items-center justify-center gap-2 overflow-hidden rounded-md border border-inkband bg-inkband px-3 text-xs font-bold tracking-wide whitespace-nowrap text-white uppercase transition-colors hover:border-inkband/90 hover:bg-inkband/90 hover:text-white"
           >
             <Package className="size-3.5 shrink-0" aria-hidden="true" />

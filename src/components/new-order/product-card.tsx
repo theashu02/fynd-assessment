@@ -121,7 +121,7 @@ export function ProductCard({
           <Button
             onClick={onAdd}
             disabled={out}
-            className="w-full disabled:opacity-100"
+            className="w-full disabled:opacity-100 text-[14px]"
             variant={out ? "outline" : "default"}
             size="lg"
           >
