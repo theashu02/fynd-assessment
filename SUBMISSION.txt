@@ -1,0 +1,82 @@
+COMMERCE ORDER CONSOLE - SUBMISSION
+=====================================
+Tagline: Every phone order, placed, tracked, and shipped - in one console.
+
+1. WHAT THIS IS
+---------------
+A browser-based console for store staff taking orders over the phone.
+It replaces the spreadsheet with one place to create, find, and fulfil
+orders, backed by a Postgres database so orders and stock survive restarts.
+
+2. REQUIREMENTS COVERAGE
+------------------------
+[1] Create orders
+    - Catalogue of 8 synthetic products with live stock, including one
+      out-of-stock item (Noise-Cancelling Headphones, stock 0).
+    - Staff add multiple products with quantity steppers clamped to stock,
+      see a live subtotal/total, and submit. Totals are computed on the
+      server, never trusted from the client.
+
+[2] Find orders
+    - Order list with debounced reference search and status tabs with counts.
+    - Detail view (by uuid or ORD- reference) with items, quantities,
+      unit prices, total, status badge, and fulfilment timeline.
+
+[3] Manage fulfilment
+    - Placed -> Packed -> Shipped; cancel allowed from Placed/Packed only.
+    - The server rejects skipped/invalid transitions with 409
+      INVALID_TRANSITION even though the UI only shows valid actions.
+    - Cancel requires confirmation stating stock will be restored.
+
+[4] Data consistency
+    - Stock is deducted atomically in the placement transaction; server-side
+      totals; unique ORD-1001+ references from a Postgres sequence.
+    - Cancel restores stock exactly once (guarded update + idempotency flag).
+    - One unavailable line fails the whole multi-item order (409
+      INSUFFICIENT_STOCK with per-line details); all stock left unchanged.
+
+Acceptance examples (both covered by automated tests in tests/orders.test.ts):
+    - A=5 units, B=0: order for 2xA + 1xB fails, A still 5, no order created.
+    - Order 2xA, cancel it: stock back to 5; repeat cancel -> 409, still 5.
+
+3. HOW TO RUN
+-------------
+Prerequisites: Bun 1.x, a Postgres database (Neon recommended).
+
+  bun install
+  cp .env.example .env            # set DATABASE_URL
+  bun run db:push                 # create tables
+  bun run db:seed                 # load the 8-product catalogue
+  bun dev                         # http://localhost:3000 -> /orders/new
+
+4. HOW TO TEST
+--------------
+  # Offline unit tests (no database needed):
+  bun test tests/cart-store.test.ts tests/format.test.ts \
+    tests/stock.test.ts tests/product-images.test.ts
+
+  # Full suite incl. API tests (needs throwaway DB; tables are truncated):
+  cp .env.test.example .env.test  # set TEST_DATABASE_URL to a Neon branch
+  bun test
+
+  # Static checks:
+  bunx tsc --noEmit
+  bunx eslint
+
+5. STACK
+--------
+Next.js 16 (App Router) + TypeScript + Tailwind v4 + shadcn/ui + lucide-react,
+TanStack Query, Zustand, Elysia + Eden Treaty (end-to-end typed API),
+Drizzle ORM + Neon Postgres, Bun.
+
+6. REPO MAP
+-----------
+  src/app/          Routes: (console)/orders, products, api/[[...slugs]]
+  src/components/   Feature modules (new-order, orders, products, sidebar,
+                    ui, common) each behind an index.ts barrel
+  src/server/       Elysia app + health/products/orders routes
+  src/db/           Schema, client, seed catalogue
+  src/lib/          Eden client, queries, formatting (via @/lib barrel)
+  src/stores/       Stock-clamped Zustand cart store
+  tests/            bun:test suites (see section 4)
+  README.md         Full docs: setup, scripts, API reference, design system
