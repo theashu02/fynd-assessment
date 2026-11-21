@@ -1,10 +1,11 @@
-import type { Metadata, Viewport } from "next";
-import { Ubuntu } from "next/font/google";
+﻿import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
+import { Providers } from "@/components/providers";
 
-const ubuntu = Ubuntu({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -14,17 +15,16 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  colorScheme: "light dark",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F1F5F9" },
-    { media: "(prefers-color-scheme: dark)", color: "#0F172A" },
-  ],
+  colorScheme: "light",
+  themeColor: "#F1F5F9",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${ubuntu.className} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={inter.className + " h-full antialiased"}>
+      <body className="h-full overflow-hidden">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
