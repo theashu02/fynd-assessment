@@ -21,8 +21,12 @@ function MobileBrandBar() {
         <MobileSidebar />
       </Suspense>
       <Link href="/orders/new" className="flex min-w-0 flex-1 items-center justify-center gap-2">
-        <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-white">
-          <Package2 className="size-4" aria-hidden />
+        <span className="relative flex size-8 shrink-0 items-center justify-center rounded-md bg-inkband text-white">
+          <Package2 className="size-4" aria-hidden="true" />
+          <span
+            className="absolute -right-0.5 -bottom-0.5 size-2 rounded-full border-2 border-background bg-accent"
+            aria-hidden="true"
+          />
         </span>
         <span className="truncate text-base font-bold tracking-tight">OrderConsole</span>
       </Link>
@@ -33,11 +37,11 @@ function MobileBrandBar() {
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-screen overflow-hidden bg-background text-foreground">
+    <div className="flex h-dvh overflow-hidden bg-background text-foreground">
       <Suspense>
         <AppSidebar />
       </Suspense>
-      <div className="flex h-screen min-w-0 flex-1 flex-col overflow-hidden bg-background">
+      <div className="flex h-full min-w-0 flex-1 flex-col overflow-hidden bg-background">
         <PromoBand />
         <MobileBrandBar />
         <main className="no-scrollbar mx-auto w-full max-w-7xl flex-1 overflow-y-auto px-4 py-6 sm:px-6 lg:px-8">{children}</main>
