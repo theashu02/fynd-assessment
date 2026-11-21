@@ -108,14 +108,15 @@ export function OrderDetailView({ id }: { id: string }) {
 
   const order = orderQuery.data;
   if (!order) return <DetailSkeleton />;
-  const actions = (
-    <OrderActions
-      status={order.status}
-      isPending={isPending}
-      onAdvance={handleStatus}
-      onCancel={() => handleStatus("CANCELLED")}
-    />
-  );
+  const actions =
+    order.status === "PLACED" || order.status === "PACKED" ? (
+      <OrderActions
+        status={order.status}
+        isPending={isPending}
+        onAdvance={handleStatus}
+        onCancel={() => handleStatus("CANCELLED")}
+      />
+    ) : null;
 
   return (
     <div>
@@ -149,14 +150,18 @@ export function OrderDetailView({ id }: { id: string }) {
               <TableBody>
                 {order.items.map((item) => (
                   <TableRow key={item.id}>
-                    <TableCell className="font-medium">
+                    <TableCell className="font-semibold text-foreground">
                       {item.productName}
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right text-muted-foreground">
                       {formatCents(item.unitPriceCents)}
                     </TableCell>
-                    <TableCell className="text-right">{item.quantity}</TableCell>
                     <TableCell className="text-right">
+                      <span className="inline-flex h-6 min-w-8 items-center justify-center rounded-md bg-muted px-2 text-xs font-bold text-foreground">
+                        {item.quantity}
+                      </span>
+                    </TableCell>
+                    <TableCell className="text-right font-semibold text-foreground">
                       {formatCents(item.unitPriceCents * item.quantity)}
                     </TableCell>
                   </TableRow>
@@ -167,7 +172,7 @@ export function OrderDetailView({ id }: { id: string }) {
                   <TableCell colSpan={3} className="font-semibold">
                     Total
                   </TableCell>
-                  <TableCell className="text-right font-bold">
+                  <TableCell className="text-right text-base font-bold text-foreground">
                     {formatCents(order.totalCents)}
                   </TableCell>
                 </TableRow>
@@ -176,21 +181,27 @@ export function OrderDetailView({ id }: { id: string }) {
           </CardContent>
         </Card>
         <div className="flex min-w-0 flex-col gap-6">
-          <Card className="border-border bg-card shadow-none">
+          <Card className="shadow-none">
             <CardHeader>
-              <CardTitle>Fulfilment</CardTitle>
+              <CardTitle className="text-lg">Fulfilment</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
               <OrderTimeline status={order.status} />
-              <Separator />
-              {actions}
+              {actions ? (
+                <div className="hidden flex-col gap-4 lg:flex">
+                  <Separator />
+                  {actions}
+                </div>
+              ) : null}
             </CardContent>
           </Card>
         </div>
       </div>
-      <MobileActionBar>
-        <div className="flex-1">{actions}</div>
-      </MobileActionBar>
+      {actions ? (
+        <MobileActionBar>
+          <div className="flex-1">{actions}</div>
+        </MobileActionBar>
+      ) : null}
     </div>
   );
 }

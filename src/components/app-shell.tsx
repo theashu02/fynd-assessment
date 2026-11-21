@@ -21,7 +21,7 @@ function MobileBrandBar() {
         <MobileSidebar />
       </Suspense>
       <Link href="/orders/new" className="flex min-w-0 flex-1 items-center justify-center gap-2">
-        <span className="flex size-8 shrink-0 items-center justify-center bg-primary text-white">
+        <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-white">
           <Package2 className="size-4" aria-hidden />
         </span>
         <span className="truncate text-base font-bold tracking-tight">OrderConsole</span>

@@ -18,7 +18,7 @@ export function SidebarFooter({ collapsed }: SidebarFooterProps) {
             <Link
               href="/products"
               aria-label="Check live stock"
-              className="flex size-9 items-center justify-center border border-border bg-card text-muted-foreground transition-colors hover:border-inkband hover:bg-inkband hover:text-white"
+              className="flex size-9 items-center justify-center rounded-md border border-border bg-card text-muted-foreground transition-colors hover:border-inkband hover:bg-inkband hover:text-white"
             >
               <Headset className="size-4" aria-hidden="true" />
             </Link>
@@ -26,14 +26,14 @@ export function SidebarFooter({ collapsed }: SidebarFooterProps) {
           <p className="hidden text-[10px] text-muted-foreground md:block">v1</p>
         </div>
       ) : (
-        <div className="border border-border bg-card p-2.5">
+        <div className="rounded-md border border-border bg-card p-2.5">
           <p className="flex items-center gap-1.5 text-xs font-bold text-foreground">
-            <span className="flex size-6 items-center justify-center bg-inkband text-white">
+            <span className="flex size-6 items-center justify-center rounded-md bg-inkband text-white">
               <Headset className="size-3.5" aria-hidden="true" />
             </span>
             Store support
             <span className="ml-auto flex items-center gap-1 text-[10px] font-semibold text-status-packed">
-              <span className="size-1.5 animate-pulse bg-status-packed" aria-hidden="true" />
+              <span className="size-1.5 animate-pulse rounded-full bg-status-packed" aria-hidden="true" />
               LIVE
             </span>
           </p>
@@ -42,7 +42,7 @@ export function SidebarFooter({ collapsed }: SidebarFooterProps) {
           </p>
           <Link
             href="/products"
-            className="mt-2 flex h-9 items-center justify-start gap-2 overflow-hidden border border-inkband bg-inkband px-3 text-xs font-bold tracking-wide whitespace-nowrap text-white uppercase transition-colors hover:border-inkband/90 hover:bg-inkband/90 hover:text-white active:scale-[0.98]"
+            className="mt-2 flex h-9 items-center justify-start gap-2 overflow-hidden rounded-md border border-inkband bg-inkband px-3 text-xs font-bold tracking-wide whitespace-nowrap text-white uppercase transition-colors hover:border-inkband/90 hover:bg-inkband/90 hover:text-white active:scale-[0.98]"
           >
             <Package className="size-3.5 shrink-0" aria-hidden="true" />
             <span className="truncate">Check live stock</span>

@@ -84,7 +84,7 @@ export function OrdersTable({
     return (
       <Card className="border-border bg-card shadow-none">
         <CardContent className="flex flex-col items-center gap-3 px-4 py-10 text-center">
-          <span className="flex size-14 items-center justify-center bg-muted">
+          <span className="flex size-14 items-center justify-center rounded-md bg-muted">
             <ClipboardList className="size-6 text-muted-foreground" aria-hidden />
           </span>
           <p className="text-sm font-semibold text-foreground">No orders found</p>

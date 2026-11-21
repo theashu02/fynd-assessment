@@ -26,29 +26,12 @@ export function OrderActions({
   onAdvance,
   onCancel,
 }: {
-  status: OrderStatus;
+  status: "PLACED" | "PACKED";
   isPending: boolean;
   onAdvance: (next: OrderStatus) => void;
   onCancel: () => void;
 }) {
   const [confirmOpen, setConfirmOpen] = useState(false);
-
-  if (status === "SHIPPED") {
-    return (
-      <p className="text-xs text-muted-foreground">
-        This order has shipped. No further actions are available.
-      </p>
-    );
-  }
-
-  if (status === "CANCELLED") {
-    return (
-      <p className="text-xs text-muted-foreground">
-        This order was cancelled and stock was restored. No further actions
-        are available.
-      </p>
-    );
-  }
 
   const next: OrderStatus = status === "PLACED" ? "PACKED" : "SHIPPED";
   const advanceLabel =
@@ -115,4 +98,3 @@ export function OrderActions({
     </div>
   );
 }
-

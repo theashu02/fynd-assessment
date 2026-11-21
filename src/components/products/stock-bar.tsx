@@ -13,7 +13,7 @@ export function StockBar({ stock, max }: { stock: number; max: number }) {
   return (
     <div className="flex min-w-0 items-center gap-2">
       <div
-        className="h-2 min-w-20 flex-1 bg-muted"
+        className="h-2 min-w-20 flex-1 overflow-hidden rounded-full bg-muted"
         role="progressbar"
         aria-valuenow={stock}
         aria-valuemin={0}
@@ -21,7 +21,7 @@ export function StockBar({ stock, max }: { stock: number; max: number }) {
         aria-label={`Stock level ${stock} of ${max}`}
       >
         <div
-          className="h-full"
+          className="h-full rounded-full"
           style={{
             width: `${pct}%`,
             backgroundColor: stockFill(stock),

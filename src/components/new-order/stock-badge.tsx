@@ -24,7 +24,7 @@ export function StockBadge({ stock }: { stock: number }) {
         : `In stock - ${stock}`;
   return (
     <span
-      className="inline-flex h-5 w-fit items-center px-2 text-xs font-medium"
+      className="inline-flex h-5 w-fit items-center rounded-md px-2 text-xs font-medium"
       style={style}
     >
       {label}

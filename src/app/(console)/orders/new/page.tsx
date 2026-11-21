@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/toast-manager";
 import { BadgeCheck, RotateCcw, Search, ShieldCheck, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   Sheet,
@@ -134,7 +134,7 @@ export default function NewOrderPage() {
 
   return (
     <div>
-      <section className="mb-6 overflow-hidden border border-border bg-inkband text-white">
+      <section className="mb-6 overflow-hidden rounded-md border border-border bg-inkband text-white">
         <div className="flex flex-col gap-4 p-5 sm:p-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="min-w-0">
             <p className="text-[11px] font-bold uppercase tracking-widest text-white">
@@ -161,7 +161,7 @@ export default function NewOrderPage() {
               </span>
             </div>
           </div>
-          <div className="flex shrink-0 items-center gap-3 border border-white bg-inkband p-3">
+          <div className="flex shrink-0 items-center gap-3 rounded-md border border-white bg-inkband p-3">
             <RotateCcw className="size-4 text-white" aria-hidden />
             <div className="leading-tight">
               <p className="text-sm font-bold text-white">Stock is live</p>
@@ -175,9 +175,9 @@ export default function NewOrderPage() {
       </section>
 
       {productsQuery.isLoading ? (
-        <div className="product-grid grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <Skeleton key={i} className="h-64 w-full" />
+        <div className="product-grid grid grid-cols-1 gap-6 sm:grid-cols-2 lg:gap-8">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Skeleton key={i} className="h-[480px] w-full rounded-2xl" />
           ))}
         </div>
       ) : productsQuery.isError ? (
@@ -200,9 +200,9 @@ export default function NewOrderPage() {
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search products by name or SKU"
+                placeholder="Search products by name"
                 aria-label="Search catalogue"
-                className="bg-card pl-9"
+                className="h-12 bg-card pl-9 text-base!"
               />
             </div>
             <div className="mb-4 flex flex-wrap gap-2" role="tablist" aria-label="Stock filter">
@@ -227,7 +227,7 @@ export default function NewOrderPage() {
                 </CardContent>
               </Card>
             ) : (
-              <div className="product-grid grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              <div className="product-grid grid grid-cols-1 gap-6 p-1 sm:grid-cols-2 sm:p-2 lg:gap-8">
                 {filtered.map((p) => (
                   <ProductCard
                     key={p.id}
@@ -243,12 +243,7 @@ export default function NewOrderPage() {
             <div className="h-20 lg:hidden" />
           </div>
           <div className="hidden lg:block">
-            <Card className="sticky top-6 border-border bg-card shadow-none">
-              <CardHeader>
-                <CardTitle>Order summary</CardTitle>
-              </CardHeader>
-              <CardContent>{summary}</CardContent>
-            </Card>
+            <CardContent>{summary}</CardContent>
           </div>
         </div>
       )}

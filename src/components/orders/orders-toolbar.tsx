@@ -27,7 +27,7 @@ export const STATUS_OPTIONS: { value: StatusFilter; label: string }[] = [
 
 function CountBadge({ count, active }: { count: number; active?: boolean }) {
   return (
-    <span className={cn("ml-1 inline-flex h-4 min-w-4 items-center justify-center px-1 text-[11px] font-semibold", active ? "bg-white/20 text-white" : "bg-secondary text-secondary-foreground")}>
+    <span className={cn("ml-1 inline-flex h-4 min-w-4 items-center justify-center rounded-md px-1 text-[11px] font-semibold", active ? "bg-white/20 text-white" : "bg-secondary text-secondary-foreground")}>
       {count}
     </span>
   );

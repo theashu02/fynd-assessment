@@ -36,6 +36,10 @@
   --color-status-packed: var(--status-packed);
   --color-status-shipped: var(--status-shipped);
   --color-status-cancelled: var(--status-cancelled);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
   --color-warning: var(--warning);
   --color-primary-hover: var(--primary-hover);
   --color-mist: var(--mist);
@@ -43,19 +47,20 @@
   --color-on-lake: var(--on-lake);
   --color-inkband: var(--inkband);
   --color-on-inkband: var(--on-inkband);
-  --radius-sm: 0rem;
-  --radius-md: 0rem;
-  --radius-lg: 0rem;
-  --radius-xl: 0rem;
-  --radius-2xl: 0rem;
-  --radius-3xl: 0rem;
-  --radius-4xl: 0rem;
+  --radius-xs: 0.125rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.75rem;
+  --radius-4xl: 2.25rem;
 }
 
 :root {
   color-scheme: light;
-  --radius: 0rem;
-  --background: #F4F4F4;
+  --radius: 0.5rem;
+  --background: #F1F5F9;
   --foreground: #0F172A;
   --card: #FFFFFF;
   --card-foreground: #0F172A;
@@ -77,10 +82,14 @@
   --status-packed: #0F766E;
   --status-shipped: #4338CA;
   --status-cancelled: #DC2626;
+  --success: #0F766E;
+  --success-foreground: #FFFFFF;
+  --info: #1D4ED8;
+  --info-foreground: #FFFFFF;
   --border: #CBD5E1;
   --input: #CBD5E1;
   --ring: #1D4ED8;
-  --mist: #F4F4F4;
+  --mist: #F1F5F9;
   --lake: #1D4ED8;
   --on-lake: #FFFFFF;
   --inkband: #0F172A;
@@ -89,7 +98,7 @@
   --sidebar-foreground: #0F172A;
   --sidebar-primary: #1D4ED8;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F4F4F4;
+  --sidebar-accent: #F1F5F9;
   --sidebar-accent-foreground: #0F172A;
   --sidebar-border: #CBD5E1;
   --sidebar-ring: #1D4ED8;

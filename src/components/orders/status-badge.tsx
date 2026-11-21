@@ -18,7 +18,7 @@ export function StatusBadge({
   return (
     <span
       className={cn(
-        "inline-flex h-5 w-fit items-center px-2 text-xs font-medium",
+        "inline-flex h-5 w-fit items-center rounded-md px-2 text-xs font-medium",
         className,
       )}
       style={{ backgroundColor: STATUS_FILL[status], color: "#FFFFFF" }}

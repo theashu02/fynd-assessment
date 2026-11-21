@@ -42,10 +42,10 @@ export function SidebarBrand({ collapsed, onToggle, action }: SidebarBrandProps)
   return (
     <div className="flex h-14 shrink-0 items-center gap-2 px-2">
       <Link href="/orders/new" className="flex min-w-0 flex-1 items-center gap-2">
-        <span className="relative flex size-8 shrink-0 items-center justify-center bg-inkband text-white">
+        <span className="relative flex size-8 shrink-0 items-center justify-center rounded-md bg-inkband text-white">
           <Package2 className="size-4" aria-hidden="true" />
           <span
-            className="absolute -right-0.5 -bottom-0.5 size-2 border-2 border-background bg-accent"
+            className="absolute -right-0.5 -bottom-0.5 size-2 rounded-full border-2 border-background bg-accent"
             aria-hidden="true"
           />
         </span>

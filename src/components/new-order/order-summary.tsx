@@ -1,4 +1,12 @@
-import { Loader2, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
+import {
+  AlertCircle,
+  Loader2,
+  Lock,
+  Minus,
+  Plus,
+  ShoppingBag,
+  Trash2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatCents } from "@/lib/format";
 import type { ProductDto } from "@/lib/products";
@@ -40,103 +48,177 @@ export function OrderSummary({
   onRemove: (productId: string) => void;
   onPlaceOrder: () => void;
 }) {
+  const failedById = new Map(failedLines.map((line) => [line.productId, line]));
+
   if (lines.length === 0) {
     return (
-      <div className="flex flex-col items-center gap-3 px-4 py-10 text-center">
-        <ShoppingCart className="size-12 text-muted-foreground" aria-hidden />
-        <p className="text-sm font-semibold text-foreground">Cart is empty</p>
-        <p className="max-w-55 text-xs text-muted-foreground">
-          Add products from the catalogue. Stock is checked again on the server.
-        </p>
+      <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+        <div className="flex flex-col items-center justify-center py-10 text-center">
+          {/* <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-muted text-muted-foreground"> */}
+            <ShoppingBag className="size-12" aria-hidden />
+          {/* </div> */}
+          <h3 className="text-lg font-semibold tracking-tight text-foreground">
+            Your cart is empty
+          </h3>
+          <p className="mt-1.5 max-w-57.5 text-sm leading-relaxed text-muted-foreground">
+            Add products from the catalogue to get started. Inventory is
+            verified automatically at checkout.
+          </p>
+        </div>
       </div>
     );
   }
+
   return (
-    <div className="flex flex-col gap-3">
-      {stockError ? (
-        <div
-          role="alert"
-          className="border px-3 py-2 text-xs"
-          style={{ borderColor: "#DC2626", backgroundColor: "#DC2626", color: "#FFFFFF" }}
-        >
-          <p className="font-semibold">{stockError}</p>
-          {failedLines.length > 0 ? (
-            <ul className="mt-1 list-disc pl-4">
-              {failedLines.map((d) => (
-                <li key={d.productId}>
-                  {d.name}: requested {d.requested}, available {d.available}
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </div>
-      ) : null}
-      <ul className="flex flex-col divide-y divide-border">
-        {lines.map(({ product, qty }) => (
-          <li key={product.id} className="flex items-center gap-2 py-3">
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-foreground">
-                {product.name}
-              </p>
-              <p className="text-xs text-muted-foreground">
-                {formatCents(product.priceCents)} each
-              </p>
-              <div className="mt-1 flex items-center gap-1">
-                <Button
-                  variant="outline"
-                  size="icon-sm"
-                  onClick={() => onDecrement(product.id)}
-                  aria-label={`Decrease ${product.name}`}
-                >
-                  <Minus className="size-3" aria-hidden />
-                </Button>
-                <span className="w-6 text-center text-xs font-semibold">{qty}</span>
-                <Button
-                  variant="outline"
-                  size="icon-sm"
-                  onClick={() => onIncrement(product)}
-                  disabled={qty >= product.stock}
-                  aria-label={`Increase ${product.name}`}
-                >
-                  <Plus className="size-3" aria-hidden />
-                </Button>
-              </div>
-            </div>
-            <div className="flex shrink-0 flex-col items-end gap-1">
-              <span className="text-sm font-semibold text-foreground">
-                {formatCents(product.priceCents * qty)}
-              </span>
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                onClick={() => onRemove(product.id)}
-                aria-label={`Remove ${product.name}`}
-              >
-                <Trash2 className="size-3.5" aria-hidden />
-              </Button>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <div className="flex items-center justify-between border-t border-border pt-3">
-        <span className="text-sm text-muted-foreground">
-          {count} item{count === 1 ? "" : "s"}
-        </span>
-        <span className="text-base font-bold text-foreground">
-          {formatCents(totalCents)}
+    <section
+      aria-label="Order summary"
+      className="flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm"
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-border px-5 py-4">
+        <h2 className="text-sm font-semibold tracking-tight text-foreground">
+          Order summary
+        </h2>
+        <span className="inline-flex items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground tabular-nums">
+          {count} {count === 1 ? "item" : "items"}
         </span>
       </div>
-      <Button onClick={onPlaceOrder} disabled={isPending || lines.length === 0} className="w-full">
-        {isPending ? (
-          <>
-            <Loader2 className="size-4 animate-spin" aria-hidden />
-            Placing order...
-          </>
-        ) : (
-          "Place order"
-        )}
-      </Button>
-    </div>
+
+      {/* Stock Error Banner */}
+      {stockError ? (
+        <div className="px-5 pt-4">
+          <div
+            role="alert"
+            className="flex gap-2.5 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive"
+          >
+            <AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden />
+            <div className="space-y-1">
+              <p className="font-semibold leading-snug">{stockError}</p>
+              {failedLines.length > 0 ? (
+                <ul className="list-disc space-y-0.5 pl-4 text-destructive/90">
+                  {failedLines.map((d) => (
+                    <li key={d.productId}>
+                      <span className="font-medium">{d.name}</span>: requested{" "}
+                      {d.requested}, only {d.available} left
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {/* Line Items */}
+      <ul className="max-h-[420px] divide-y divide-border overflow-y-auto px-5">
+        {lines.map(({ product, qty }) => {
+          const failed = failedById.get(product.id);
+          const atMaxStock = qty >= product.stock;
+
+          return (
+            <li
+              key={product.id}
+              className="group flex items-start justify-between gap-4 py-4"
+            >
+              <div className="min-w-0 flex-1 space-y-2">
+                <div>
+                  <p className="truncate text-sm font-medium leading-tight text-foreground">
+                    {product.name}
+                  </p>
+                  <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground tabular-nums">
+                    <span>{formatCents(product.priceCents)} each</span>
+                    {failed ? (
+                      <span className="font-medium text-destructive">
+                        · Only {failed.available} available
+                      </span>
+                    ) : atMaxStock ? (
+                      <span className="text-amber-600 dark:text-amber-400">
+                        · Max stock reached
+                      </span>
+                    ) : null}
+                  </div>
+                </div>
+
+                {/* Segmented Quantity Stepper */}
+                <div className="inline-flex items-center rounded-md border border-input bg-background shadow-xs">
+                  <button
+                    type="button"
+                    onClick={() => onDecrement(product.id)}
+                    disabled={isPending}
+                    aria-label={`Decrease ${product.name}`}
+                    className="flex size-7 items-center justify-center rounded-l-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-40"
+                  >
+                    <Minus className="size-3" aria-hidden />
+                  </button>
+                  <span className="min-w-8 border-x border-input px-2 text-center text-xs font-medium text-foreground tabular-nums">
+                    {qty}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => onIncrement(product)}
+                    disabled={isPending || atMaxStock}
+                    aria-label={`Increase ${product.name}`}
+                    className="flex size-7 items-center justify-center rounded-r-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-40"
+                  >
+                    <Plus className="size-3" aria-hidden />
+                  </button>
+                </div>
+              </div>
+
+              {/* Line Total & Remove */}
+              <div className="flex shrink-0 flex-col items-end justify-between gap-2">
+                <span className="text-sm font-semibold text-foreground tabular-nums">
+                  {formatCents(product.priceCents * qty)}
+                </span>
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  onClick={() => onRemove(product.id)}
+                  disabled={isPending}
+                  aria-label={`Remove ${product.name}`}
+                  className="text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
+                >
+                  <Trash2 className="size-3.5" aria-hidden />
+                </Button>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+
+      {/* Totals & CTA Footer */}
+      <div className="space-y-4 border-t border-border bg-muted/30 px-5 py-4">
+        <div className="space-y-2 text-sm">
+          <div className="flex items-center justify-between text-muted-foreground">
+            <span>Subtotal</span>
+            <span className="tabular-nums">{formatCents(totalCents)}</span>
+          </div>
+          <div className="flex items-center justify-between border-t border-border pt-2.5 text-base font-semibold text-foreground">
+            <span>Total</span>
+            <span className="tabular-nums">{formatCents(totalCents)}</span>
+          </div>
+        </div>
+
+        <Button
+          onClick={onPlaceOrder}
+          disabled={isPending || lines.length === 0}
+          className="h-10 w-full gap-2 font-medium shadow-xs"
+        >
+          {isPending ? (
+            <>
+              <Loader2 className="size-4 animate-spin" aria-hidden />
+              Placing order...
+            </>
+          ) : (
+            <>Place order · {formatCents(totalCents)}</>
+          )}
+        </Button>
+
+        <p className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground">
+          <Lock className="size-3" aria-hidden />
+          Inventory is verified live when you place your order
+        </p>
+      </div>
+    </section>
   );
 }
-

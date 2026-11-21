@@ -22,7 +22,7 @@ function SidebarNavItem({
         asChild
         variant="ghost"
         className={cn(
-          "group relative h-10 w-full rounded-none border px-3 text-[13px] font-medium transition-colors",
+          "group relative h-10 w-full rounded-md border px-3 text-[13px] font-medium transition-colors",
           collapsed ? "justify-center px-0" : "justify-start gap-3",
           active
             ? "border-inkband/20 bg-inkband text-white hover:bg-[#1a2535]! hover:text-white!"
@@ -32,7 +32,7 @@ function SidebarNavItem({
         <Link href={route.href} aria-current={active ? "page" : undefined}>
           <span
             className={cn(
-              "absolute top-1/2 left-0 h-5 w-0.75 -translate-y-1/2 bg-accent",
+              "absolute top-1/2 left-0 h-5 w-0.75 -translate-y-1/2 rounded-full bg-accent",
               active ? "opacity-100" : "opacity-0 group-hover:opacity-40",
             )}
             aria-hidden="true"
@@ -47,7 +47,7 @@ function SidebarNavItem({
           </span>
           {!collapsed && <span className="truncate">{route.name}</span>}
           {!collapsed && active && (
-            <span className="ml-auto size-1.5 shrink-0 bg-accent" aria-hidden="true" />
+            <span className="ml-auto size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
           )}
         </Link>
       </Button>

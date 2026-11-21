@@ -56,7 +56,7 @@ export function MobileSidebar() {
           variant="outline"
           size="icon"
           aria-label="Open menu"
-          className="rounded-none bg-card shadow-sm md:hidden"
+          className="rounded-md bg-card shadow-sm md:hidden"
         >
           <Menu className="h-5 w-5" />
         </Button>

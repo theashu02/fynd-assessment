@@ -42,7 +42,7 @@ function Toast({ className, ...props }: ToastPrimitive.Root.Props) {
     <ToastPrimitive.Root
       data-slot="toast"
       className={cn(
-        "group/toast pointer-events-auto absolute inset-x-0 bottom-0 z-[calc(1000-var(--toast-index))] mx-auto w-fit max-w-full origin-bottom rounded-lg bg-[#121212] text-white shadow-[0_8px_28px_rgba(0,0,0,0.55)] ring-1 ring-white/10 will-change-transform outline-none select-none",
+        "group/toast pointer-events-auto absolute inset-x-0 bottom-0 z-[calc(1000-var(--toast-index))] mx-auto w-fit max-w-full origin-bottom rounded-md bg-[#121212] text-white shadow-[0_8px_28px_rgba(0,0,0,0.55)] ring-1 ring-white/10 will-change-transform outline-none select-none",
         "[--gap:0.5rem] [--height:var(--toast-frontmost-height,var(--toast-height))] [--offset-y:calc(var(--toast-offset-y)+calc(var(--toast-index)*var(--gap))+var(--toast-swipe-movement-y))] [--peek:0.5rem] [--scale:calc(max(0,1-(var(--toast-index)*0.08)))] [--shrink:calc(1-var(--scale))]",
         "h-(--height) transform-[translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)+(var(--toast-index)*var(--peek))+(var(--shrink)*var(--height))))_scale(var(--scale))] [transition:transform_400ms_cubic-bezier(0.22,1,0.36,1),opacity_400ms,height_150ms]",
         "after:absolute after:inset-x-0 after:top-full after:h-[calc(var(--gap)+1px)] after:w-full after:content-['']",
@@ -69,7 +69,7 @@ function ToastContent({ className, ...props }: ToastPrimitive.Content.Props) {
     <ToastPrimitive.Content
       data-slot="toast-content"
       className={cn(
-        "flex h-full w-fit max-w-full items-center gap-3 overflow-hidden rounded-lg px-4 py-3 transition-opacity duration-250 ease-[cubic-bezier(0.22,1,0.36,1)]",
+        "flex h-full w-fit max-w-full items-center gap-3 overflow-hidden rounded-md px-4 py-3 transition-opacity duration-250 ease-[cubic-bezier(0.22,1,0.36,1)]",
         className,
       )}
       {...props}
